@@ -3,13 +3,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 export default function TechPage() {
   return (
-    <div className="space-y-6">
-      <header className="space-y-1">
+    <div className="space-y-7">
+      <header className="space-y-2">
         <p className="section-title">Tech stack</p>
-        <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
+        <h1 className="font-semibold tracking-tight text-slate-900 text-[clamp(1.8rem,3.2vw,2.4rem)]">
           Tools and technologies I work with
         </h1>
-        <p className="max-w-2xl text-sm text-slate-600">
+        <p className="max-w-2xl text-base text-slate-700 md:text-lg">
           A mix of languages and tools from university projects and internships, with a focus on building maintainable,
           practical applications.
         </p>
@@ -22,7 +22,7 @@ export default function TechPage() {
             <CardDescription>Core languages I use regularly</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-wrap gap-1.5 text-xs">
+            <div className="flex flex-wrap gap-1.5 text-sm md:text-base">
               <Badge>Java</Badge>
               <Badge>Python</Badge>
               <Badge>HTML</Badge>
@@ -40,7 +40,7 @@ export default function TechPage() {
             <CardDescription>What I build with day-to-day</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-wrap gap-1.5 text-xs">
+            <div className="flex flex-wrap gap-1.5 text-sm md:text-base">
               <Badge>Streamlit</Badge>
               <Badge>Swing</Badge>
               <Badge>Tkinter</Badge>
@@ -58,7 +58,7 @@ export default function TechPage() {
             <CardDescription>How I like to work</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-wrap gap-1.5 text-xs">
+            <div className="flex flex-wrap gap-1.5 text-sm md:text-base">
               <Badge variant="outline">Problem solving</Badge>
               <Badge variant="outline">Adaptability</Badge>
               <Badge variant="outline">Communication</Badge>
@@ -76,7 +76,7 @@ export default function TechPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-xs text-slate-700">
+          <p className="text-sm text-slate-700 md:text-base">
             I&apos;m studying BSc Computer Science with Management at Queen Mary University of London, currently with a
             First Class average (74.7%) in Year 1. Key modules include Object Oriented Programming (71.4%), Fundamentals
             of Web Technology (81.4%), and Computer Systems and Networks (62.5%), which underpin the tools and

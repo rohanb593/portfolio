@@ -3,13 +3,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 export default function ExperiencePage() {
   return (
-    <div className="space-y-6">
-      <header className="space-y-1">
+    <div className="space-y-7">
+      <header className="space-y-2">
         <p className="section-title">Experience</p>
-        <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
+        <h1 className="font-semibold tracking-tight text-slate-900 text-[clamp(1.8rem,3.2vw,2.4rem)]">
           Internships and hands-on roles
         </h1>
-        <p className="max-w-2xl text-sm text-slate-600">
+        <p className="max-w-2xl text-base text-slate-700 md:text-lg">
           Practical experience building internal tools, managing infrastructure, and delivering data-driven insights
           across London and Lusaka.
         </p>
@@ -32,7 +32,7 @@ export default function ExperiencePage() {
             </div>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-1.5 text-xs text-slate-700">
+            <ul className="space-y-1.5 text-sm text-slate-700 md:text-base">
               <li>
                 • Built a licence management system in Python/Streamlit to centralise tracking for 50+ multi-vendor
                 software licences.
@@ -69,7 +69,7 @@ export default function ExperiencePage() {
             </div>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-1.5 text-xs text-slate-700">
+            <ul className="space-y-1.5 text-sm text-slate-700 md:text-base">
               <li>
                 • Engineered a full-stack web application with a Streamlit front-end and Python back-end to analyse
                 repository metrics (stars, forks, code lines) for hundreds of projects.
