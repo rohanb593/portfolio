@@ -3,36 +3,35 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 export default function ExperiencePage() {
   return (
-    <div className="space-y-7">
-      <header className="space-y-2">
-        <p className="section-title">Experience</p>
-        <h1 className="font-semibold tracking-tight text-slate-900 text-[clamp(1.8rem,3.2vw,2.4rem)]">
-          Internships and hands-on roles
+    <div className="flex min-h-[70vh] flex-col items-center justify-center gap-10 px-3 text-center sm:px-6 md:gap-12">
+      <header className="max-w-3xl space-y-4 md:space-y-5">
+        <h1 className="font-semibold tracking-tight text-slate-900 text-[clamp(2.8rem,6vw,4.5rem)]">
+          Experience
         </h1>
-        <p className="max-w-2xl text-base text-slate-700 md:text-lg">
+        <p className="leading-relaxed text-slate-700 text-[clamp(1.15rem,2.5vw,1.6rem)]">
           Practical experience building internal tools, managing infrastructure, and delivering data-driven insights
           across London and Lusaka.
         </p>
       </header>
 
-      <div className="space-y-4">
-        <Card>
+      <div className="w-full max-w-4xl space-y-6">
+        <Card className="p-6 md:p-7">
           <CardHeader>
-            <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <div className="flex flex-col gap-3">
               <div>
-                <CardTitle>Corporate IT Solutions</CardTitle>
-                <CardDescription>Summer Intern · Lusaka, Zambia · Jun 2025 – Aug 2025</CardDescription>
+                <CardTitle className="text-xl md:text-2xl mb-2">Corporate IT Solutions</CardTitle>
+                <CardDescription className="text-base md:text-lg">Summer Intern · Lusaka, Zambia · Jun 2025 – Aug 2025</CardDescription>
               </div>
-              <div className="flex flex-wrap gap-1">
-                <Badge>Python</Badge>
-                <Badge>Streamlit</Badge>
-                <Badge>MySQL</Badge>
-                <Badge>Networking</Badge>
+              <div className="flex flex-wrap justify-center gap-2">
+                <Badge className="text-sm md:text-base px-3 py-1">Python</Badge>
+                <Badge className="text-sm md:text-base px-3 py-1">Streamlit</Badge>
+                <Badge className="text-sm md:text-base px-3 py-1">MySQL</Badge>
+                <Badge className="text-sm md:text-base px-3 py-1">Networking</Badge>
               </div>
             </div>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-1.5 text-sm text-slate-700 md:text-base">
+            <ul className="space-y-2 text-base text-slate-700 md:text-lg text-left">
               <li>
                 • Built a licence management system in Python/Streamlit to centralise tracking for 50+ multi-vendor
                 software licences.
@@ -54,22 +53,22 @@ export default function ExperiencePage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="p-6 md:p-7">
           <CardHeader>
-            <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <div className="flex flex-col gap-3">
               <div>
-                <CardTitle>James Fletcher</CardTitle>
-                <CardDescription>Summer Intern · London, UK · Jun 2024 – Jul 2024</CardDescription>
+                <CardTitle className="text-xl md:text-2xl mb-2">James Fletcher</CardTitle>
+                <CardDescription className="text-base md:text-lg">Summer Intern · London, UK · Jun 2024 – Jul 2024</CardDescription>
               </div>
-              <div className="flex flex-wrap gap-1">
-                <Badge>Python</Badge>
-                <Badge>Streamlit</Badge>
-                <Badge>APIs</Badge>
+              <div className="flex flex-wrap justify-center gap-2">
+                <Badge className="text-sm md:text-base px-3 py-1">Python</Badge>
+                <Badge className="text-sm md:text-base px-3 py-1">Streamlit</Badge>
+                <Badge className="text-sm md:text-base px-3 py-1">APIs</Badge>
               </div>
             </div>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-1.5 text-sm text-slate-700 md:text-base">
+            <ul className="space-y-2 text-base text-slate-700 md:text-lg text-left">
               <li>
                 • Engineered a full-stack web application with a Streamlit front-end and Python back-end to analyse
                 repository metrics (stars, forks, code lines) for hundreds of projects.
