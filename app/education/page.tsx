@@ -1,19 +1,37 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function EducationPage() {
   return (
-    <div className="flex min-h-[70vh] flex-col items-center justify-center gap-10 px-3 text-center sm:px-6 md:gap-12">
-      <header className="max-w-3xl space-y-4 md:space-y-5">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="flex min-h-[70vh] flex-col items-center justify-center gap-10 px-3 text-center sm:px-6 md:gap-12"
+    >
+      <motion.header
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="max-w-3xl space-y-4 md:space-y-5"
+      >
         <h1 className="font-semibold tracking-tight text-slate-900 text-[clamp(2.8rem,6vw,4.5rem)]">
           Education
         </h1>
         <p className="leading-relaxed text-slate-700 text-[clamp(1.15rem,2.5vw,1.6rem)]">
           Academic background and achievements from Queen Mary University of London and American International School of Lusaka.
         </p>
-      </header>
+      </motion.header>
 
       <div className="w-full max-w-4xl space-y-6">
-        <Card className="p-6 md:p-7 text-left">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <Card className="p-6 md:p-7 text-left">
           <CardHeader>
             <CardTitle className="text-xl md:text-2xl mb-2">Queen Mary University of London</CardTitle>
             <CardDescription className="text-base md:text-lg">BSc Computer Science with Management · London, UK · 2024 – 2028</CardDescription>
@@ -34,8 +52,14 @@ export default function EducationPage() {
             </div>
           </CardContent>
         </Card>
+        </motion.div>
 
-        <Card className="p-6 md:p-7 text-left">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <Card className="p-6 md:p-7 text-left">
           <CardHeader>
             <CardTitle className="text-xl md:text-2xl mb-2">American International School of Lusaka</CardTitle>
             <CardDescription className="text-base md:text-lg">International Baccalaureate · Lusaka, Zambia · 2021 – 2023</CardDescription>
@@ -46,8 +70,9 @@ export default function EducationPage() {
             </p>
           </CardContent>
         </Card>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

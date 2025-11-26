@@ -1,10 +1,23 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Home() {
   return (
-    <div className="flex min-h-[70vh] flex-col items-center justify-center gap-10 px-3 text-center sm:px-6 md:gap-12">
-      <section className="max-w-3xl space-y-5 md:space-y-6">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="flex min-h-[70vh] flex-col items-center justify-center gap-10 px-3 text-center sm:px-6 md:gap-12"
+    >
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="max-w-3xl space-y-5 md:space-y-6"
+      >
         <h1 className="font-semibold tracking-tight text-slate-900 text-[clamp(2.8rem,6vw,4.5rem)]">
           Hi, I&apos;m Rohan
         </h1>
@@ -13,9 +26,14 @@ export default function Home() {
           I enjoy building practical software — from full-stack web apps to data tools — and using code to solve real problems.
           I&apos;m especially interested in combining technical skills with a business mindset to create useful products.
         </p>
-      </section>
+      </motion.section>
 
-      <section className="flex flex-wrap items-center justify-center gap-5 md:gap-6">
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="flex flex-wrap items-center justify-center gap-5 md:gap-6"
+      >
         <a
           href="https://github.com"
           target="_blank"
@@ -49,11 +67,21 @@ export default function Home() {
           </svg>
           <span>LinkedIn</span>
         </a>
-      </section>
+      </motion.section>
 
-      <section className="w-full max-w-7xl mt-10 md:mt-12">
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="w-full max-w-7xl mt-10 md:mt-12"
+      >
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
-          <Link href="/experience" className="group">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <Link href="/experience" className="group">
             <Card className="h-full transition-all duration-200 hover:shadow-lg hover:scale-[1.02] hover:border-sky-300 cursor-pointer p-6 md:p-7">
               <CardHeader>
                 <div className="mb-4 flex items-center justify-center gap-3">
@@ -87,8 +115,14 @@ export default function Home() {
               </CardContent>
             </Card>
           </Link>
+          </motion.div>
 
-          <Link href="/education" className="group">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+          >
+            <Link href="/education" className="group">
             <Card className="h-full transition-all duration-200 hover:shadow-lg hover:scale-[1.02] hover:border-sky-300 cursor-pointer p-6 md:p-7">
               <CardHeader>
                 <div className="mb-4 flex items-center justify-center gap-3">
@@ -121,8 +155,14 @@ export default function Home() {
               </CardContent>
             </Card>
           </Link>
+          </motion.div>
 
-          <Link href="/projects" className="group">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+          >
+            <Link href="/projects" className="group">
             <Card className="h-full transition-all duration-200 hover:shadow-lg hover:scale-[1.02] hover:border-sky-300 cursor-pointer p-6 md:p-7">
               <CardHeader>
                 <div className="mb-4 flex items-center justify-center gap-3">
@@ -155,8 +195,14 @@ export default function Home() {
               </CardContent>
             </Card>
           </Link>
+          </motion.div>
 
-          <Link href="/tech" className="group">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.7 }}
+          >
+            <Link href="/tech" className="group">
             <Card className="h-full transition-all duration-200 hover:shadow-lg hover:scale-[1.02] hover:border-sky-300 cursor-pointer p-6 md:p-7">
               <CardHeader>
                 <div className="mb-4 flex items-center justify-center gap-3">
@@ -188,8 +234,9 @@ export default function Home() {
               </CardContent>
             </Card>
           </Link>
+          </motion.div>
         </div>
-      </section>
-    </div>
+      </motion.section>
+    </motion.div>
   );
 }

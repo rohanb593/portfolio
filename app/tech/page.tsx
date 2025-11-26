@@ -1,10 +1,23 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function TechPage() {
   return (
-    <div className="flex min-h-[70vh] flex-col items-center justify-center gap-10 px-3 text-center sm:px-6 md:gap-12">
-      <header className="max-w-3xl space-y-4 md:space-y-5">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="flex min-h-[70vh] flex-col items-center justify-center gap-10 px-3 text-center sm:px-6 md:gap-12"
+    >
+      <motion.header
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="max-w-3xl space-y-4 md:space-y-5"
+      >
         <h1 className="font-semibold tracking-tight text-slate-900 text-[clamp(2.8rem,6vw,4.5rem)]">
           Tech Stack
         </h1>
@@ -12,10 +25,15 @@ export default function TechPage() {
           A mix of languages and tools from university projects and internships, with a focus on building maintainable,
           practical applications.
         </p>
-      </header>
+      </motion.header>
 
       <div className="w-full max-w-6xl grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <Card className="p-6 md:p-7">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <Card className="p-6 md:p-7">
           <CardHeader>
             <CardTitle className="text-xl md:text-2xl mb-2">Programming languages</CardTitle>
             <CardDescription className="text-base md:text-lg">Core languages I use regularly</CardDescription>
@@ -32,28 +50,40 @@ export default function TechPage() {
             </div>
           </CardContent>
         </Card>
+        </motion.div>
 
-        <Card className="p-6 md:p-7">
-          <CardHeader>
-            <CardTitle className="text-xl md:text-2xl mb-2">Frameworks & tools</CardTitle>
-            <CardDescription className="text-base md:text-lg">What I build with day-to-day</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Badge className="text-sm md:text-base px-3 py-1">Streamlit</Badge>
-              <Badge className="text-sm md:text-base px-3 py-1">Swing</Badge>
-              <Badge className="text-sm md:text-base px-3 py-1">Tkinter</Badge>
-              <Badge className="text-sm md:text-base px-3 py-1">MySQL</Badge>
-              <Badge className="text-sm md:text-base px-3 py-1">phpMyAdmin</Badge>
-              <Badge className="text-sm md:text-base px-3 py-1">Git</Badge>
-              <Badge className="text-sm md:text-base px-3 py-1">GitHub</Badge>
-            </div>
-          </CardContent>
-        </Card>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <Card className="p-6 md:p-7">
+            <CardHeader>
+              <CardTitle className="text-xl md:text-2xl mb-2">Frameworks & tools</CardTitle>
+              <CardDescription className="text-base md:text-lg">What I build with day-to-day</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap justify-center gap-2">
+                <Badge className="text-sm md:text-base px-3 py-1">Streamlit</Badge>
+                <Badge className="text-sm md:text-base px-3 py-1">Swing</Badge>
+                <Badge className="text-sm md:text-base px-3 py-1">Tkinter</Badge>
+                <Badge className="text-sm md:text-base px-3 py-1">MySQL</Badge>
+                <Badge className="text-sm md:text-base px-3 py-1">phpMyAdmin</Badge>
+                <Badge className="text-sm md:text-base px-3 py-1">Git</Badge>
+                <Badge className="text-sm md:text-base px-3 py-1">GitHub</Badge>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
 
-        <Card className="p-6 md:p-7">
-          <CardHeader>
-            <CardTitle className="text-xl md:text-2xl mb-2">Strengths</CardTitle>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <Card className="p-6 md:p-7">
+            <CardHeader>
+              <CardTitle className="text-xl md:text-2xl mb-2">Strengths</CardTitle>
             <CardDescription className="text-base md:text-lg">How I like to work</CardDescription>
           </CardHeader>
           <CardContent>
@@ -65,9 +95,15 @@ export default function TechPage() {
             </div>
           </CardContent>
         </Card>
+        </motion.div>
       </div>
 
-      <Card className="w-full max-w-4xl p-6 md:p-7">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+      >
+        <Card className="w-full max-w-4xl p-6 md:p-7">
         <CardHeader>
           <CardTitle className="text-xl md:text-2xl mb-2">Education context</CardTitle>
           <CardDescription className="text-base md:text-lg">
@@ -83,7 +119,8 @@ export default function TechPage() {
           </p>
         </CardContent>
       </Card>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 

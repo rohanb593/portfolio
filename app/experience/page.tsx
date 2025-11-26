@@ -1,10 +1,23 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function ExperiencePage() {
   return (
-    <div className="flex min-h-[70vh] flex-col items-center justify-center gap-10 px-3 text-center sm:px-6 md:gap-12">
-      <header className="max-w-3xl space-y-4 md:space-y-5">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="flex min-h-[70vh] flex-col items-center justify-center gap-10 px-3 text-center sm:px-6 md:gap-12"
+    >
+      <motion.header
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="max-w-3xl space-y-4 md:space-y-5"
+      >
         <h1 className="font-semibold tracking-tight text-slate-900 text-[clamp(2.8rem,6vw,4.5rem)]">
           Experience
         </h1>
@@ -12,10 +25,15 @@ export default function ExperiencePage() {
           Practical experience building internal tools, managing infrastructure, and delivering data-driven insights
           across London and Lusaka.
         </p>
-      </header>
+      </motion.header>
 
       <div className="w-full max-w-4xl space-y-6">
-        <Card className="p-6 md:p-7">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <Card className="p-6 md:p-7">
           <CardHeader>
             <div className="flex flex-col gap-3">
               <div>
@@ -52,8 +70,14 @@ export default function ExperiencePage() {
             </ul>
           </CardContent>
         </Card>
+        </motion.div>
 
-        <Card className="p-6 md:p-7">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <Card className="p-6 md:p-7">
           <CardHeader>
             <div className="flex flex-col gap-3">
               <div>
@@ -80,8 +104,9 @@ export default function ExperiencePage() {
             </ul>
           </CardContent>
         </Card>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

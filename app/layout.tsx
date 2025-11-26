@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,48 +29,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div className="min-h-screen bg-[var(--background)] text-slate-900 flex flex-col">
-          <header className="border-b border-slate-200/70 bg-[#e0efff]">
-            <div className="flex w-full items-center justify-between px-4 py-4 md:px-8 md:py-5">
-              <a
-                href="/"
-                className="text-lg font-semibold text-sky-800 hover:text-sky-900 md:text-2xl hover:no-underline focus-visible:no-underline"
-              >
-                Rohan Bhagat
-              </a>
-              <nav className="flex items-center gap-5 text-base font-medium md:gap-8 md:text-lg">
-                <a
-                  href="/"
-                  className="text-slate-900 hover:text-sky-900 hover:no-underline focus-visible:no-underline"
-                >
-                  Home
-                </a>
-                <a
-                  href="/experience"
-                  className="text-slate-900 hover:text-sky-900 hover:no-underline focus-visible:no-underline"
-                >
-                  Experience
-                </a>
-                <a
-                  href="/education"
-                  className="text-slate-900 hover:text-sky-900 hover:no-underline focus-visible:no-underline"
-                >
-                  Education
-                </a>
-                <a
-                  href="/projects"
-                  className="text-slate-900 hover:text-sky-900 hover:no-underline focus-visible:no-underline"
-                >
-                  Projects
-                </a>
-                <a
-                  href="/tech"
-                  className="text-slate-900 hover:text-sky-900 hover:no-underline focus-visible:no-underline"
-                >
-                  Tech Stack
-                </a>
-              </nav>
-            </div>
-          </header>
+          <Header />
           <main className="mx-auto flex-1 w-full max-w-5xl px-4 py-8 md:px-6 md:py-10">
             {children}
           </main>
