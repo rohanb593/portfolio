@@ -16,30 +16,16 @@ export default function Home() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="max-w-4xl space-y-6 md:space-y-8"
+        className="max-w-3xl space-y-5 md:space-y-6"
       >
         <h1 className="font-semibold tracking-tight text-slate-900 text-[clamp(2.8rem,6vw,4.5rem)]">
           Hi, I&apos;m Rohan
         </h1>
-        <div className="space-y-5 md:space-y-6">
-          <p className="leading-relaxed text-slate-700 text-[clamp(1.15rem,2.5vw,1.6rem)]">
-            I&apos;m a Computer Science with Management student at Queen Mary University of London.
-            I enjoy building practical software — from full-stack web apps to data tools — and using code to solve real problems.
-            I&apos;m especially interested in combining technical skills with a business mindset to create useful products.
-          </p>
-          <div className="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-slate-200/50 text-left">
-            <h2 className="font-bold text-xl md:text-2xl text-slate-900 mb-4">About Me</h2>
-            <p className="leading-relaxed text-slate-700 text-base md:text-lg">
-              I was born in England and am ethnically Indian. I spent the first 18 years of my life in Zambia, a beautiful
-              country that shaped my early experiences and perspectives. Currently, I am pursuing a degree in Computer Science
-              with Management at Queen Mary University of London. My love for technology began at a young age, and it has only
-              grown stronger over the years. I am fascinated by how technology can solve complex problems, improve lives, and
-              drive innovation. Combining my passion for technology with my interest in management, I aim to bridge the gap
-              between technical solutions and business strategies. Outside of academics, I enjoy exploring new technologies,
-              working on personal coding projects, and staying updated with the latest trends in the tech industry.
-            </p>
-          </div>
-        </div>
+        <p className="leading-relaxed text-slate-700 text-[clamp(1.15rem,2.5vw,1.6rem)]">
+          I&apos;m a Computer Science with Management student at Queen Mary University of London.
+          I enjoy building practical software — from full-stack web apps to data tools — and using code to solve real problems.
+          I&apos;m especially interested in combining technical skills with a business mindset to create useful products.
+        </p>
       </motion.section>
 
       <motion.section
