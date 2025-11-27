@@ -1,16 +1,52 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
 export default function ExperiencePage() {
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [showCorporateProjects, setShowCorporateProjects] = useState(false);
+  const [showFletcherProjects, setShowFletcherProjects] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      
+      const scrollableHeight = documentHeight - windowHeight;
+      const progress = scrollableHeight > 0 ? (scrollTop / scrollableHeight) * 100 : 0;
+      
+      setScrollProgress(Math.min(progress, 100));
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Initial call
+    
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="flex min-h-screen flex-col items-center gap-10 px-3 py-10 text-left sm:px-6 md:gap-12 md:py-16"
-    >
+    <div className="relative">
+      {/* Scroll Progress Bar */}
+      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-slate-200">
+        <motion.div
+          className="h-full bg-sky-600"
+          style={{ width: `${scrollProgress}%` }}
+          initial={{ width: 0 }}
+          animate={{ width: `${scrollProgress}%` }}
+          transition={{ duration: 0.1 }}
+        />
+      </div>
+      
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex min-h-screen flex-col items-center gap-10 px-3 py-10 text-left sm:px-6 md:gap-12 md:py-16"
+      >
       <motion.header
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -212,6 +248,66 @@ export default function ExperiencePage() {
                   <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">MySQL</Badge>
                   <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">Networking</Badge>
                 </div>
+
+                {/* Projects Dropdown */}
+                <div className="mt-6 pt-6 border-t border-slate-200">
+                  <button
+                    onClick={() => setShowCorporateProjects(!showCorporateProjects)}
+                    className="flex items-center gap-2 text-sky-600 hover:text-sky-700 font-semibold text-base md:text-lg transition-colors w-full text-left"
+                  >
+                    <span>Projects</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className={`h-5 w-5 transition-transform duration-200 ${showCorporateProjects ? "rotate-180" : ""}`}
+                    >
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </button>
+                  <AnimatePresence>
+                    {showCorporateProjects && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="mt-4 space-y-4"
+                      >
+                        <div className="pl-4 border-l-2 border-sky-200 space-y-4">
+                          <div>
+                            <h5 className="font-semibold text-slate-900 text-base md:text-lg mb-2">License Management System</h5>
+                            <p className="text-sm md:text-base text-slate-700 mb-2">
+                              Web app to track and manage software licences from multiple vendors, giving IT a centralised view of expiry dates, vendors, and usage.
+                            </p>
+                            <Link
+                              href="/projects"
+                              className="text-sky-600 hover:text-sky-700 font-medium text-sm md:text-base inline-flex items-center gap-1 hover:no-underline"
+                            >
+                              View project details →
+                            </Link>
+                          </div>
+                          <div>
+                            <h5 className="font-semibold text-slate-900 text-base md:text-lg mb-2">Inventory Management System</h5>
+                            <p className="text-sm md:text-base text-slate-700 mb-2">
+                              Full-stack inventory tracking web app for a hardware store, supporting product lookup, basic checkout flows, and stock visibility.
+                            </p>
+                            <Link
+                              href="/projects"
+                              className="text-sky-600 hover:text-sky-700 font-medium text-sm md:text-base inline-flex items-center gap-1 hover:no-underline"
+                            >
+                              View project details →
+                            </Link>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
             </motion.div>
 
@@ -264,12 +360,59 @@ export default function ExperiencePage() {
                   <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">Streamlit</Badge>
                   <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">APIs</Badge>
                 </div>
+
+                {/* Projects Dropdown */}
+                <div className="mt-6 pt-6 border-t border-slate-200">
+                  <button
+                    onClick={() => setShowFletcherProjects(!showFletcherProjects)}
+                    className="flex items-center gap-2 text-sky-600 hover:text-sky-700 font-semibold text-base md:text-lg transition-colors w-full text-left"
+                  >
+                    <span>Projects</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className={`h-5 w-5 transition-transform duration-200 ${showFletcherProjects ? "rotate-180" : ""}`}
+                    >
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </button>
+                  <AnimatePresence>
+                    {showFletcherProjects && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="mt-4"
+                      >
+                        <div className="pl-4 border-l-2 border-sky-200">
+                          <h5 className="font-semibold text-slate-900 text-base md:text-lg mb-2">Repository Scout</h5>
+                          <p className="text-sm md:text-base text-slate-700 mb-2">
+                            Web application that searches for repositories on GitHub based on user search criteria. Overcomes GitHub&apos;s search limitations using the GitHub API, with a user-friendly Streamlit interface for analyzing repository statistics including stars, forks, and code lines.
+                          </p>
+                          <Link
+                            href="/projects"
+                            className="text-sky-600 hover:text-sky-700 font-medium text-sm md:text-base inline-flex items-center gap-1 hover:no-underline"
+                          >
+                            View project details →
+                          </Link>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
             </motion.div>
           </div>
         </motion.section>
       </div>
     </motion.div>
+    </div>
   );
 }
 

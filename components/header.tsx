@@ -23,7 +23,7 @@ export default function Header() {
         className={`transition-all duration-300 ${
           isScrolled
             ? "fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-sm border-none"
-            : "relative border-b border-slate-200/70 bg-[#e0efff]"
+            : "relative bg-[var(--background)]"
         }`}
       >
         <div className="flex w-full items-center justify-between px-4 py-4 md:px-8 md:py-5">

@@ -1,17 +1,50 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function ProjectsPage() {
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      
+      const scrollableHeight = documentHeight - windowHeight;
+      const progress = scrollableHeight > 0 ? (scrollTop / scrollableHeight) * 100 : 0;
+      
+      setScrollProgress(Math.min(progress, 100));
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Initial call
+    
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="flex min-h-screen flex-col items-center gap-10 px-3 py-10 text-left sm:px-6 md:gap-12 md:py-16"
-    >
+    <div className="relative">
+      {/* Scroll Progress Bar */}
+      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-slate-200">
+        <motion.div
+          className="h-full bg-sky-600"
+          style={{ width: `${scrollProgress}%` }}
+          initial={{ width: 0 }}
+          animate={{ width: `${scrollProgress}%` }}
+          transition={{ duration: 0.1 }}
+        />
+      </div>
+      
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex min-h-screen flex-col items-center gap-10 px-3 py-10 text-left sm:px-6 md:gap-12 md:py-16"
+      >
       <motion.header
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -35,7 +68,16 @@ export default function ProjectsPage() {
         >
           <Card className="h-full p-6 md:p-8 shadow-sm border border-slate-200/50">
             <CardHeader>
-              <CardTitle className="text-xl md:text-2xl mb-2 text-left">License Management System</CardTitle>
+              <CardTitle className="text-xl md:text-2xl mb-2 text-left">
+                <a
+                  href="https://github.com/rohanb593/CITS-Python-Project"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-slate-900 hover:text-sky-900 hover:no-underline"
+                >
+                  License Management System
+                </a>
+              </CardTitle>
               <CardDescription className="text-lg md:text-xl text-left text-sky-600 font-medium">Python · Streamlit · MySQL</CardDescription>
             </CardHeader>
             <CardContent className="text-left">
@@ -58,7 +100,16 @@ export default function ProjectsPage() {
         >
           <Card className="h-full p-6 md:p-8 shadow-sm border border-slate-200/50">
             <CardHeader>
-              <CardTitle className="text-xl md:text-2xl mb-2 text-left">Inventory Management System</CardTitle>
+              <CardTitle className="text-xl md:text-2xl mb-2 text-left">
+                <a
+                  href="https://github.com/rohanb593/CITS-Node.js"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-slate-900 hover:text-sky-900 hover:no-underline"
+                >
+                  Inventory Management System
+                </a>
+              </CardTitle>
               <CardDescription className="text-lg md:text-xl text-left text-sky-600 font-medium">HTML · CSS · JavaScript · MySQL</CardDescription>
             </CardHeader>
             <CardContent className="text-left">
@@ -83,7 +134,7 @@ export default function ProjectsPage() {
             <CardHeader>
               <CardTitle className="text-xl md:text-2xl mb-2 text-left">
                 <a
-                  href="https://github.com/etchpad/repo-scout.git"
+                  href="https://github.com/rohanb593/repo-scout"
                   target="_blank"
                   rel="noreferrer"
                   className="text-slate-900 hover:text-sky-900 hover:no-underline"
@@ -114,7 +165,16 @@ export default function ProjectsPage() {
         >
           <Card className="h-full p-6 md:p-8 shadow-sm border border-slate-200/50">
             <CardHeader>
-              <CardTitle className="text-xl md:text-2xl mb-2 text-left">Horse Race Simulator</CardTitle>
+              <CardTitle className="text-xl md:text-2xl mb-2 text-left">
+                <a
+                  href="https://github.com/rohanb593/Horse-Racing-Simulator"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-slate-900 hover:text-sky-900 hover:no-underline"
+                >
+                  Horse Race Simulator
+                </a>
+              </CardTitle>
               <CardDescription className="text-lg md:text-xl text-left text-sky-600 font-medium">Java · Swing</CardDescription>
             </CardHeader>
             <CardContent className="text-left">
@@ -186,6 +246,7 @@ export default function ProjectsPage() {
         </motion.div>
       </div>
     </motion.div>
+    </div>
   );
 }
 
