@@ -2,8 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 
 export default function ProjectsPage() {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -81,13 +88,20 @@ export default function ProjectsPage() {
               <CardDescription className="text-lg md:text-xl text-left text-sky-600 font-medium">Python · Streamlit · MySQL</CardDescription>
             </CardHeader>
             <CardContent className="text-left">
-              <p className="text-base text-slate-700 md:text-lg mb-4">
-                Web app to track and manage software licences from multiple vendors, giving IT a centralised view of
-                expiry dates, vendors, and usage.
+              <p className="text-sm font-semibold text-slate-600 mb-2 uppercase tracking-[0.18em]">
+                Tech stack
               </p>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">Dashboards</Badge>
-                <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">CRUD</Badge>
+                {["Python", "Streamlit", "MySQL"].map((tech) => (
+                  <Link key={tech} href={`/tech#${slugify(tech)}`}>
+                    <Badge
+                      variant="outline"
+                      className="bg-white/80 text-slate-800 border-slate-300 px-3 py-1 hover:bg-sky-50 hover:text-sky-900"
+                    >
+                      {tech}
+                    </Badge>
+                  </Link>
+                ))}
               </div>
             </CardContent>
           </Card>
@@ -113,13 +127,21 @@ export default function ProjectsPage() {
               <CardDescription className="text-lg md:text-xl text-left text-sky-600 font-medium">HTML · CSS · JavaScript · MySQL</CardDescription>
             </CardHeader>
             <CardContent className="text-left">
-              <p className="text-base text-slate-700 md:text-lg mb-4">
-                Full-stack inventory tracking web app for a hardware store, supporting product lookup, basic checkout
-                flows, and stock visibility.
+              <p className="text-sm font-semibold text-slate-600 mb-2 uppercase tracking-[0.18em]">
+                Tech stack
               </p>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">Full-stack</Badge>
-                <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">Retail</Badge>
+                
+                {["HTML", "CSS", "JavaScript", "MySQL"].map((tech) => (
+                  <Link key={tech} href={`/tech#${slugify(tech)}`}>
+                    <Badge
+                      variant="outline"
+                      className="bg-white/80 text-slate-800 border-slate-300 px-3 py-1 hover:bg-sky-50 hover:text-sky-900"
+                    >
+                      {tech}
+                    </Badge>
+                  </Link>
+                ))}
               </div>
             </CardContent>
           </Card>
@@ -145,14 +167,20 @@ export default function ProjectsPage() {
               <CardDescription className="text-lg md:text-xl text-left text-sky-600 font-medium">Python · Streamlit · GitHub API</CardDescription>
             </CardHeader>
             <CardContent className="text-left">
-              <p className="text-base text-slate-700 md:text-lg mb-4">
-                Web application that searches for repositories on GitHub based on user search criteria. Overcomes GitHub&apos;s
-                search limitations using the GitHub API, with a user-friendly Streamlit interface for analyzing repository
-                statistics including stars, forks, and code lines.
+              <p className="text-sm font-semibold text-slate-600 mb-2 uppercase tracking-[0.18em]">
+                Tech stack
               </p>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">APIs</Badge>
-                <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">Analytics</Badge>
+                {["Python", "Streamlit", "GitHub API"].map((tech) => (
+                  <Link key={tech} href={`/tech#${slugify(tech)}`}>
+                    <Badge
+                      variant="outline"
+                      className="bg-white/80 text-slate-800 border-slate-300 px-3 py-1 hover:bg-sky-50 hover:text-sky-900"
+                    >
+                      {tech}
+                    </Badge>
+                  </Link>
+                ))}
               </div>
             </CardContent>
           </Card>
@@ -178,13 +206,20 @@ export default function ProjectsPage() {
               <CardDescription className="text-lg md:text-xl text-left text-sky-600 font-medium">Java · Swing</CardDescription>
             </CardHeader>
             <CardContent className="text-left">
-              <p className="text-base text-slate-700 md:text-lg mb-4">
-                Graphical horse racing game with betting mechanics and random race outcomes; built to practise Java,
-                Swing UI, and event-driven programming.
+              <p className="text-sm font-semibold text-slate-600 mb-2 uppercase tracking-[0.18em]">
+                Tech stack
               </p>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">OOP</Badge>
-                <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">Desktop</Badge>
+                {["Java", "Swing"].map((tech) => (
+                  <Link key={tech} href={`/tech#${slugify(tech)}`}>
+                    <Badge
+                      variant="outline"
+                      className="bg-white/80 text-slate-800 border-slate-300 px-3 py-1 hover:bg-sky-50 hover:text-sky-900"
+                    >
+                      {tech}
+                    </Badge>
+                  </Link>
+                ))}
               </div>
             </CardContent>
           </Card>
@@ -201,13 +236,20 @@ export default function ProjectsPage() {
               <CardDescription className="text-lg md:text-xl text-left text-sky-600 font-medium">HTML · CSS · PHP · MySQL · JavaScript</CardDescription>
             </CardHeader>
             <CardContent className="text-left">
-              <p className="text-base text-slate-700 md:text-lg mb-4">
-                Responsive personal website with integrated blog, using PHP/MySQL for content management and a custom
-                front-end for posts and projects.
+              <p className="text-sm font-semibold text-slate-600 mb-2 uppercase tracking-[0.18em]">
+                Tech stack
               </p>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">Blog</Badge>
-                <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">PHP</Badge>
+                {["HTML", "CSS", "JavaScript", "PHP", "MySQL"].map((tech) => (
+                  <Link key={tech} href={`/tech#${slugify(tech)}`}>
+                    <Badge
+                      variant="outline"
+                      className="bg-white/80 text-slate-800 border-slate-300 px-3 py-1 hover:bg-sky-50 hover:text-sky-900"
+                    >
+                      {tech}
+                    </Badge>
+                  </Link>
+                ))}
               </div>
             </CardContent>
           </Card>
@@ -233,13 +275,20 @@ export default function ProjectsPage() {
               <CardDescription className="text-lg md:text-xl text-left text-sky-600 font-medium">Java · Swing</CardDescription>
             </CardHeader>
             <CardContent className="text-left">
-              <p className="text-base text-slate-700 md:text-lg mb-4">
-                A game developed using Java where the player must kill the Boggle Monster. Players search different locations
-                and defeat multiple enemies to reach the final stage.
+              <p className="text-sm font-semibold text-slate-600 mb-2 uppercase tracking-[0.18em]">
+                Tech stack
               </p>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">Game</Badge>
-                <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">Java</Badge>
+                {["Java", "Swing"].map((tech) => (
+                  <Link key={tech} href={`/tech#${slugify(tech)}`}>
+                    <Badge
+                      variant="outline"
+                      className="bg-white/80 text-slate-800 border-slate-300 px-3 py-1 hover:bg-sky-50 hover:text-sky-900"
+                    >
+                      {tech}
+                    </Badge>
+                  </Link>
+                ))}
               </div>
             </CardContent>
           </Card>

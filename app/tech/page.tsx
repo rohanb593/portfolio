@@ -2,7 +2,19 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 
 const techStack = {
   languages: [
@@ -22,19 +34,12 @@ const techStack = {
     { name: "Node.js", years: 0.5 },
     { name: "Swing", years: 0.5 },
     { name: "Tkinter", years: 2 },
-    { name: "Tailwind CSS", years: 0.5 },
   ],
   software: [
     { name: "Git", years: 2 },
     { name: "GitHub", years: 2 },
     { name: "MySQL", years: 1 },
-    { name: "phpMyAdmin", years: 1 },
-    { name: "VS Code", years: 2 },
-    { name: "IntelliJ IDEA", years: 2 },
-    { name: "Docker", years: 0.5 },
-  ],
-  cloud: [
-    { name: "Cloudflare", years: 0.5 },
+    { name: "Cloudflare", years: 0.5 }, // moved here
   ],
 };
 
@@ -46,16 +51,17 @@ export default function TechPage() {
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      
+
       const scrollableHeight = documentHeight - windowHeight;
-      const progress = scrollableHeight > 0 ? (scrollTop / scrollableHeight) * 100 : 0;
-      
+      const progress =
+        scrollableHeight > 0 ? (scrollTop / scrollableHeight) * 100 : 0;
+
       setScrollProgress(Math.min(progress, 100));
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initial call
-    
+    handleScroll();
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -71,7 +77,7 @@ export default function TechPage() {
           transition={{ duration: 0.1 }}
         />
       </div>
-      
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -88,7 +94,8 @@ export default function TechPage() {
             Tech Stack
           </h1>
           <p className="leading-relaxed text-slate-700 text-[clamp(1.15rem,2.5vw,1.6rem)]">
-            A comprehensive overview of technologies I work with, organized by category with years of experience.
+            A comprehensive overview of technologies I work with, organized by
+            category with years of experience.
           </p>
         </motion.header>
 
@@ -101,8 +108,12 @@ export default function TechPage() {
           >
             <Card className="p-6 md:p-8 shadow-sm border border-slate-200/50">
               <CardHeader>
-                <CardTitle className="text-xl md:text-2xl mb-2 text-left">Languages</CardTitle>
-                <CardDescription className="text-base md:text-lg text-left">Programming languages I use</CardDescription>
+                <CardTitle className="text-xl md:text-2xl mb-2 text-left">
+                  Languages
+                </CardTitle>
+                <CardDescription className="text-base md:text-lg text-left">
+                  Programming languages I use
+                </CardDescription>
               </CardHeader>
               <CardContent className="text-left">
                 <div className="space-y-4">
@@ -111,7 +122,12 @@ export default function TechPage() {
                     const percentage = (item.years / maxYears) * 100;
                     return (
                       <div key={index} className="flex items-center gap-4">
-                        <span className="text-base md:text-lg font-medium text-slate-900 min-w-[120px]">{item.name}</span>
+                        <span
+                          id={`tech-${slugify(item.name)}`}
+                          className="text-base md:text-lg font-medium text-slate-900 min-w-[120px] scroll-mt-24"
+                        >
+                          {item.name}
+                        </span>
                         <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden relative">
                           <motion.div
                             className="h-full bg-sky-600 rounded-full"
@@ -121,7 +137,9 @@ export default function TechPage() {
                           />
                         </div>
                         <span className="text-sm md:text-base text-slate-600 font-medium min-w-[60px] text-right">
-                          {item.years >= 1 ? `${item.years}+ years` : "< 1 year"}
+                          {item.years >= 1
+                            ? `${item.years}+ years`
+                            : "< 1 year"}
                         </span>
                       </div>
                     );
@@ -131,7 +149,7 @@ export default function TechPage() {
             </Card>
           </motion.section>
 
-          {/* Frameworks and Libraries Section */}
+          {/* Frameworks Section */}
           <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -139,8 +157,12 @@ export default function TechPage() {
           >
             <Card className="p-6 md:p-8 shadow-sm border border-slate-200/50">
               <CardHeader>
-                <CardTitle className="text-xl md:text-2xl mb-2 text-left">Frameworks and Libraries</CardTitle>
-                <CardDescription className="text-base md:text-lg text-left">Frameworks and libraries I build with</CardDescription>
+                <CardTitle className="text-xl md:text-2xl mb-2 text-left">
+                  Frameworks and Libraries
+                </CardTitle>
+                <CardDescription className="text-base md:text-lg text-left">
+                  Frameworks and libraries I build with
+                </CardDescription>
               </CardHeader>
               <CardContent className="text-left">
                 <div className="space-y-4">
@@ -149,7 +171,9 @@ export default function TechPage() {
                     const percentage = (item.years / maxYears) * 100;
                     return (
                       <div key={index} className="flex items-center gap-4">
-                        <span className="text-base md:text-lg font-medium text-slate-900 min-w-[120px]">{item.name}</span>
+                        <span className="text-base md:text-lg font-medium text-slate-900 min-w-[120px]">
+                          {item.name}
+                        </span>
                         <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden relative">
                           <motion.div
                             className="h-full bg-sky-600 rounded-full"
@@ -159,7 +183,9 @@ export default function TechPage() {
                           />
                         </div>
                         <span className="text-sm md:text-base text-slate-600 font-medium min-w-[60px] text-right">
-                          {item.years >= 1 ? `${item.years}+ years` : "< 1 year"}
+                          {item.years >= 1
+                            ? `${item.years}+ years`
+                            : "< 1 year"}
                         </span>
                       </div>
                     );
@@ -169,7 +195,7 @@ export default function TechPage() {
             </Card>
           </motion.section>
 
-          {/* Software and Tools Section */}
+          {/* Software Section */}
           <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -177,8 +203,12 @@ export default function TechPage() {
           >
             <Card className="p-6 md:p-8 shadow-sm border border-slate-200/50">
               <CardHeader>
-                <CardTitle className="text-xl md:text-2xl mb-2 text-left">Software and Tools</CardTitle>
-                <CardDescription className="text-base md:text-lg text-left">Development tools and software I use</CardDescription>
+                <CardTitle className="text-xl md:text-2xl mb-2 text-left">
+                  Software and Tools
+                </CardTitle>
+                <CardDescription className="text-base md:text-lg text-left">
+                  Development tools and software I use
+                </CardDescription>
               </CardHeader>
               <CardContent className="text-left">
                 <div className="space-y-4">
@@ -187,45 +217,9 @@ export default function TechPage() {
                     const percentage = (item.years / maxYears) * 100;
                     return (
                       <div key={index} className="flex items-center gap-4">
-                        <span className="text-base md:text-lg font-medium text-slate-900 min-w-[120px]">{item.name}</span>
-                        <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden relative">
-                          <motion.div
-                            className="h-full bg-sky-600 rounded-full"
-                            initial={{ width: 0 }}
-                            animate={{ width: `${percentage}%` }}
-                            transition={{ duration: 0.8, delay: index * 0.1 }}
-                          />
-                        </div>
-                        <span className="text-sm md:text-base text-slate-600 font-medium min-w-[60px] text-right">
-                          {item.years >= 1 ? `${item.years}+ years` : "< 1 year"}
+                        <span className="text-base md:text-lg font-medium text-slate-900 min-w-[120px]">
+                          {item.name}
                         </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </CardContent>
-            </Card>
-          </motion.section>
-
-          {/* Cloud Computing Section */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-          >
-            <Card className="p-6 md:p-8 shadow-sm border border-slate-200/50">
-              <CardHeader>
-                <CardTitle className="text-xl md:text-2xl mb-2 text-left">Cloud Computing</CardTitle>
-                <CardDescription className="text-base md:text-lg text-left">Cloud platforms and services</CardDescription>
-              </CardHeader>
-              <CardContent className="text-left">
-                <div className="space-y-4">
-                  {techStack.cloud.map((item, index) => {
-                    const maxYears = 5;
-                    const percentage = (item.years / maxYears) * 100;
-                    return (
-                      <div key={index} className="flex items-center gap-4">
-                        <span className="text-base md:text-lg font-medium text-slate-900 min-w-[120px]">{item.name}</span>
                         <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden relative">
                           <motion.div
                             className="h-full bg-sky-600 rounded-full"
@@ -235,7 +229,9 @@ export default function TechPage() {
                           />
                         </div>
                         <span className="text-sm md:text-base text-slate-600 font-medium min-w-[60px] text-right">
-                          {item.years >= 1 ? `${item.years}+ years` : "< 1 year"}
+                          {item.years >= 1
+                            ? `${item.years}+ years`
+                            : "< 1 year"}
                         </span>
                       </div>
                     );
@@ -249,5 +245,3 @@ export default function TechPage() {
     </div>
   );
 }
-
-

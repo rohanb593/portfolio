@@ -5,6 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
 export default function ExperiencePage() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showCorporateProjects, setShowCorporateProjects] = useState(false);
@@ -151,11 +157,16 @@ export default function ExperiencePage() {
                 </div>
                 
                 <div className="flex flex-wrap gap-2 mt-4">
-                  <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">HTML</Badge>
-                  <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">CSS</Badge>
-                  <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">JavaScript</Badge>
-                  <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">MySQL</Badge>
-                  <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">Full-stack</Badge>
+                  {["HTML", "CSS", "JavaScript", "MySQL", "Full-stack"].map((tech) => (
+                    <Link key={tech} href={`/tech#${slugify(tech)}`}>
+                      <Badge
+                        variant="outline"
+                        className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1 hover:bg-sky-50 hover:text-sky-900"
+                      >
+                        {tech}
+                      </Badge>
+                    </Link>
+                  ))}
                 </div>
               </div>
             </motion.div>
@@ -243,10 +254,16 @@ export default function ExperiencePage() {
                 </div>
                 
                 <div className="flex flex-wrap gap-2 mt-4">
-                  <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">Python</Badge>
-                  <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">Streamlit</Badge>
-                  <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">MySQL</Badge>
-                  <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">Networking</Badge>
+                  {["Python", "Streamlit", "MySQL", "Networking"].map((tech) => (
+                    <Link key={tech} href={`/tech#${slugify(tech)}`}>
+                      <Badge
+                        variant="outline"
+                        className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1 hover:bg-sky-50 hover:text-sky-900"
+                      >
+                        {tech}
+                      </Badge>
+                    </Link>
+                  ))}
                 </div>
 
                 {/* Projects Dropdown */}
@@ -356,9 +373,16 @@ export default function ExperiencePage() {
                 </div>
                 
                 <div className="flex flex-wrap gap-2 mt-4">
-                  <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">Python</Badge>
-                  <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">Streamlit</Badge>
-                  <Badge variant="outline" className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1">APIs</Badge>
+                  {["Python", "Streamlit", "APIs"].map((tech) => (
+                    <Link key={tech} href={`/tech#${slugify(tech)}`}>
+                      <Badge
+                        variant="outline"
+                        className="bg-white/80 text-slate-700 border-slate-300 px-3 py-1 hover:bg-sky-50 hover:text-sky-900"
+                      >
+                        {tech}
+                      </Badge>
+                    </Link>
+                  ))}
                 </div>
 
                 {/* Projects Dropdown */}
