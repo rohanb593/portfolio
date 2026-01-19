@@ -39,7 +39,7 @@ const techStack = {
     { name: "Git", years: 2 },
     { name: "GitHub", years: 2 },
     { name: "MySQL", years: 1 },
-    { name: "Cloudflare", years: 0.5 }, // moved here
+    { name: "Cloudflare", years: 0.5 },
   ],
 };
 
