@@ -42,7 +42,6 @@ export async function GET() {
       
       // Filter out specific repositories that no longer exist or shouldn't be shown
       const excludedRepos = [
-        'CITS-Node.js', 
         'inventory-management', 
         'Inventory-Management-System',
         'inventory-manager-hyperlink'
