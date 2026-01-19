@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export const revalidate = 300; // Revalidate every 5 minutes
+// No need for dynamic export since we're not using static export
 
 export async function GET() {
   try {
@@ -22,7 +22,7 @@ export async function GET() {
           ...(githubToken && { Authorization: `Bearer ${githubToken}` }),
           Accept: "application/vnd.github.v3+json",
         },
-        next: { revalidate: 3600 }, // Cache for 1 hour
+        next: { revalidate: 0 }, // Always fetch fresh data from GitHub
       }
     );
 
@@ -71,6 +71,7 @@ export async function GET() {
                   ...(githubToken && { Authorization: `Bearer ${githubToken}` }),
                   Accept: "application/vnd.github.v3+json",
                 },
+                next: { revalidate: 0 }, // Always fetch fresh data
               });
               if (languagesResponse.ok) {
                 languages = await languagesResponse.json();
@@ -90,6 +91,7 @@ export async function GET() {
                     ...(githubToken && { Authorization: `Bearer ${githubToken}` }),
                     Accept: "application/vnd.github.v3+json",
                   },
+                  next: { revalidate: 0 }, // Always fetch fresh data
                 }
               );
               if (readmeResponse.ok) {
