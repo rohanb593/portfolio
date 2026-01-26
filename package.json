@@ -9,13 +9,14 @@
     "start": "next start",
     "lint": "eslint",
     "pages:build": "next build && npx @cloudflare/next-on-pages@1",
-    "deploy": "wrangler pages deploy .vercel/output/static --project-name=portfolio"
+    "deploy": "wrangler pages deploy .vercel/output --project-name=portfolio"
   },
   "dependencies": {
     "framer-motion": "^12.23.24",
-    "next": "15.5.2",
-    "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "next": "16.1.4",
+    "react": "19.2.3",
+    "react-dom": "19.2.0",
+    "vercel": "^50.5.0"
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.13.0",
@@ -28,6 +29,6 @@
     "eslint-config-next": "15.5.2",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "wrangler": "^4.59.2"
+    "wrangler": "^4.60.0"
   }
 }
