@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
-// No need for dynamic export since we're not using static export
+// Required for Cloudflare Pages - must use Edge Runtime
+export const runtime = 'edge';
 
 export async function GET() {
   try {
@@ -96,8 +97,12 @@ export async function GET() {
               );
               if (readmeResponse.ok) {
                 const readmeData = await readmeResponse.json();
-                // Decode base64 content
-                readmeContent = Buffer.from(readmeData.content, "base64").toString("utf-8");
+                // Decode base64 content (Edge Runtime compatible)
+                // atob returns a binary string, decode it to UTF-8
+                const binaryString = atob(readmeData.content);
+                readmeContent = new TextDecoder('utf-8').decode(
+                  Uint8Array.from(binaryString, (c) => c.charCodeAt(0))
+                );
                 // Get HTML version if available
                 if (readmeData.html_url) {
                   readmeHtml = readmeData.html_url;
