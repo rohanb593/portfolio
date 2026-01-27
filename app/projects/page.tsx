@@ -59,7 +59,7 @@ interface LanguageData {
 }
 
 interface Project {
-  id: number;
+  id: string | number;
   name: string;
   description: string | null;
   url: string;
@@ -81,7 +81,7 @@ export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [expandedReadmes, setExpandedReadmes] = useState<Set<number>>(new Set());
+  const [expandedReadmes, setExpandedReadmes] = useState<Set<string | number>>(new Set());
 
   // Scroll progress tracking
   useEffect(() => {
@@ -99,127 +99,27 @@ export default function ProjectsPage() {
     return () => window.removeEventListener("scroll", updateScrollProgress);
   }, []);
 
-  // Fetch projects from GitHub
+  // Fetch projects from GitHub via API route (uses GITHUB_TOKEN)
   useEffect(() => {
     async function loadProjects() {
       try {
         setLoading(true);
         setError(null);
 
-        const username = "rohanb593";
-        
-        // Fetch repositories
-        const reposResponse = await fetch(
-          `https://api.github.com/users/${username}/repos?sort=updated&per_page=30&type=owner`
-        );
+        // Fetch from our API route which has access to GITHUB_TOKEN
+        const response = await fetch("/api/github/repos");
 
-        if (!reposResponse.ok) {
-          throw new Error(`GitHub API error: ${reposResponse.status}`);
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.message || `API error: ${response.status}`);
         }
 
-        const repos = await reposResponse.json();
-        const publicRepos = repos.filter((repo: any) => !repo.fork);
-
-        // Process first 15 repos with full details
-        const projectsToProcess = publicRepos.slice(0, 15);
-        const processedProjects = await Promise.all(
-          projectsToProcess.map(async (repo: any, index: number) => {
-            let languagesData: Record<string, number> = {};
-            let languages: string[] = [];
-            let readmeExcerpt = "";
-            let readmeUrl = "";
-            let status = "";
-
-            // Fetch languages
-            try {
-              const langResponse = await fetch(repo.languages_url);
-              if (langResponse.ok) {
-                languagesData = await langResponse.json();
-                const entries = Object.entries(languagesData).sort(
-                  (a: any, b: any) => b[1] - a[1]
-                );
-                languages = entries.slice(0, 5).map(([lang]) => lang);
-              }
-            } catch (e) {
-              // Ignore language fetch errors
-            }
-
-            // Fetch README for first 8 repos
-            if (index < 8) {
-              try {
-                const readmeResponse = await fetch(
-                  `https://api.github.com/repos/${username}/${repo.name}/readme`
-                );
-                if (readmeResponse.ok) {
-                  const readmeData = await readmeResponse.json();
-                  try {
-                    const binaryString = atob(readmeData.content);
-                    const readmeContent = new TextDecoder('utf-8').decode(
-                      Uint8Array.from(binaryString, (c) => c.charCodeAt(0))
-                    );
-                    readmeUrl = readmeData.html_url || "";
-                    readmeExcerpt = readmeContent.split("\n").slice(0, 30).join("\n").trim();
-
-                    // Extract status
-                    const firstLines = readmeContent.split("\n").slice(0, 15).join("\n");
-                    const statusMatch = firstLines.match(/status[:\s]+[^\w]*\s*([a-z]+)/i);
-                    if (statusMatch && statusMatch[1]) {
-                      status = statusMatch[1].toLowerCase().trim();
-                    }
-                  } catch (e) {
-                    // Ignore decode errors
-                  }
-                }
-              } catch (e) {
-                // Ignore README fetch errors
-              }
-            }
-
-            return {
-              id: repo.id,
-              name: repo.name,
-              description: repo.description,
-              url: repo.html_url,
-              language: repo.language,
-              languages: languages.length > 0 ? languages : (repo.language ? [repo.language] : []),
-              languagesData,
-              stars: repo.stargazers_count,
-              forks: repo.forks_count,
-              created_at: repo.created_at,
-              updated_at: repo.updated_at,
-              pushed_at: repo.pushed_at,
-              readme_excerpt: readmeExcerpt,
-              readme_url: readmeUrl,
-              status,
-            };
-          })
-        );
-
-        // Add remaining repos with basic info
-        const remainingProjects = publicRepos.slice(15).map((repo: any) => ({
-          id: repo.id,
-          name: repo.name,
-          description: repo.description,
-          url: repo.html_url,
-          language: repo.language,
-          languages: repo.language ? [repo.language] : [],
-          languagesData: {},
-          stars: repo.stargazers_count,
-          forks: repo.forks_count,
-          created_at: repo.created_at,
-          updated_at: repo.updated_at,
-          pushed_at: repo.pushed_at,
-          readme_excerpt: "",
-          readme_url: "",
-          status: "",
-        }));
-
-        const allProjects = [...processedProjects, ...remainingProjects];
-        allProjects.sort(
-          (a, b) => new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime()
-        );
-
-        setProjects(allProjects);
+        const projects = await response.json();
+        
+        // Handle both array and object responses
+        const projectsArray = Array.isArray(projects) ? projects : (projects.repos || []);
+        
+        setProjects(projectsArray);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load projects");
       } finally {
@@ -230,13 +130,20 @@ export default function ProjectsPage() {
     loadProjects();
   }, []);
 
-  // Group projects by status
-  const completedProjects = projects.filter(
-    (p) => p.status && (p.status === "completed" || p.status === "complete")
-  );
-  const ongoingProjects = projects.filter(
-    (p) => !p.status || (p.status !== "completed" && p.status !== "complete")
-  );
+  // Group projects by status and sort each group by most recent
+  const completedProjects = projects
+    .filter((p) => {
+      const statusLower = (p.status || "").toLowerCase();
+      return statusLower === "completed" || statusLower === "complete" || statusLower === "done" || statusLower === "finished";
+    })
+    .sort((a, b) => new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime());
+  
+  const ongoingProjects = projects
+    .filter((p) => {
+      const statusLower = (p.status || "").toLowerCase();
+      return statusLower !== "completed" && statusLower !== "complete" && statusLower !== "done" && statusLower !== "finished";
+    })
+    .sort((a, b) => new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime());
 
   // Calculate language percentages
   function getLanguagePercentages(languagesData: Record<string, number>): LanguageData[] {
@@ -269,7 +176,7 @@ export default function ProjectsPage() {
   }
 
   // Toggle README
-  function toggleReadme(projectId: number) {
+  function toggleReadme(projectId: string | number) {
     setExpandedReadmes((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(projectId)) {
@@ -304,9 +211,14 @@ export default function ProjectsPage() {
     const hasReadme = project.readme_excerpt && project.readme_excerpt.trim().length > 0;
     const techStack = displayLanguages.join(" · ") || "Various";
 
+    // Ensure unique key: use ID if available, otherwise fallback to name + index
+    const uniqueKey = project.id 
+      ? `project-${String(project.id)}` 
+      : `project-${project.name}-${index}`;
+
     return (
       <motion.div
-        key={project.id}
+        key={uniqueKey}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -578,7 +490,7 @@ export default function ProjectsPage() {
                 </motion.h2>
                 <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
                   {ongoingProjects.map((project, index) =>
-                    renderProjectCard(project, index + completedProjects.length)
+                    renderProjectCard(project, completedProjects.length + index)
                   )}
                 </div>
               </div>
