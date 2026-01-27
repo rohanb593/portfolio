@@ -9,4 +9,10 @@ const nextConfig = {
     images: {
         unoptimized: true,
     },
+    // Optimize resource loading to reduce preload warnings
+    experimental: {
+        optimizePackageImports: ['framer-motion'],
+    },
+    // Reduce unnecessary preloading
+    poweredByHeader: false,
 }

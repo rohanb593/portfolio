@@ -19,6 +19,10 @@ export const metadata: Metadata = {
   title: "Rohan Bhagat | Portfolio",
   description:
     "Personal portfolio of Rohan Bhagat, BSc Computer Science with Management student at Queen Mary University of London.",
+  other: {
+    // Reduce preload warnings by optimizing resource hints
+    'x-content-type-options': 'nosniff',
+  },
 };
 
 export default function RootLayout({

@@ -6,66 +6,63 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-const slugify = (value: string) =>
-  value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
+// Helper function to create URL-friendly slugs
+function createSlug(text: string): string {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
 
-// GitHub language colors (common ones)
-const getLanguageColor = (language: string): string => {
-  const colors: Record<string, string> = {
-    JavaScript: "#f1e05a",
-    TypeScript: "#3178c6",
-    Python: "#3572A5",
-    Java: "#b07219",
-    HTML: "#e34c26",
-    CSS: "#563d7c",
-    PHP: "#4F5D95",
-    Ruby: "#701516",
-    Go: "#00ADD8",
-    Rust: "#dea584",
-    C: "#555555",
-    "C++": "#f34b7d",
-    "C#": "#239120",
-    Swift: "#fa7343",
-    Kotlin: "#A97BFF",
-    Dart: "#00B4AB",
-    Shell: "#89e051",
-    PowerShell: "#012456",
-    Vue: "#4fc08d",
-    React: "#61dafb",
-    Angular: "#dd0031",
-    Svelte: "#ff3e00",
-    R: "#198CE7",
-    MATLAB: "#e16737",
-    Scala: "#c22d40",
-    Clojure: "#db5855",
-    Haskell: "#5e5086",
-    Lua: "#000080",
-    Perl: "#0298c3",
-    "Objective-C": "#438eff",
-    Dockerfile: "#384d54",
-    Makefile: "#427819",
-    Markdown: "#083fa1",
-  };
-  return colors[language] || "#586e75"; // Default gray color
+// GitHub language colors
+const LANGUAGE_COLORS: Record<string, string> = {
+  JavaScript: "#f1e05a",
+  TypeScript: "#3178c6",
+  Python: "#3572A5",
+  Java: "#b07219",
+  HTML: "#e34c26",
+  CSS: "#563d7c",
+  PHP: "#4F5D95",
+  Ruby: "#701516",
+  Go: "#00ADD8",
+  Rust: "#dea584",
+  C: "#555555",
+  "C++": "#f34b7d",
+  "C#": "#239120",
+  Swift: "#fa7343",
+  Kotlin: "#A97BFF",
+  Dart: "#00B4AB",
+  Shell: "#89e051",
+  PowerShell: "#012456",
+  Vue: "#4fc08d",
+  React: "#61dafb",
+  Angular: "#dd0031",
+  Svelte: "#ff3e00",
+  R: "#198CE7",
+  MATLAB: "#e16737",
+  Scala: "#c22d40",
+  Clojure: "#db5855",
+  Haskell: "#5e5086",
+  Lua: "#000080",
+  Perl: "#0298c3",
+  "Objective-C": "#438eff",
+  Dockerfile: "#384d54",
+  Makefile: "#427819",
+  Markdown: "#083fa1",
 };
 
-interface LanguagePercentage {
+function getLanguageColor(language: string): string {
+  return LANGUAGE_COLORS[language] || "#586e75";
+}
+
+interface LanguageData {
   name: string;
   percentage: number;
-  bytes: number;
   color: string;
 }
 
-interface GitHubRepo {
+interface Project {
   id: number;
   name: string;
-  full_name: string;
   description: string | null;
   url: string;
-  homepage: string | null;
   language: string | null;
   languages: string[];
   languagesData: Record<string, number>;
@@ -76,145 +73,240 @@ interface GitHubRepo {
   pushed_at: string;
   readme_excerpt: string;
   readme_url: string;
-  topics: string[];
-  archived: boolean;
-  private: boolean;
   status: string;
 }
 
 export default function ProjectsPage() {
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [repos, setRepos] = useState<GitHubRepo[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expandedReadmes, setExpandedReadmes] = useState<Set<number>>(new Set());
 
+  // Scroll progress tracking
   useEffect(() => {
-    const handleScroll = () => {
+    function updateScrollProgress() {
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      
       const scrollableHeight = documentHeight - windowHeight;
       const progress = scrollableHeight > 0 ? (scrollTop / scrollableHeight) * 100 : 0;
-      
       setScrollProgress(Math.min(progress, 100));
-    };
+    }
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initial call
-    
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", updateScrollProgress);
+    updateScrollProgress();
+    return () => window.removeEventListener("scroll", updateScrollProgress);
   }, []);
 
+  // Fetch projects from GitHub
   useEffect(() => {
-    const fetchRepos = async () => {
+    async function loadProjects() {
       try {
         setLoading(true);
-        const response = await fetch("/api/github/repos");
-        if (!response.ok) {
-          throw new Error("Failed to fetch repositories");
-        }
-        const data = await response.json();
-        setRepos(data);
         setError(null);
+
+        const username = "rohanb593";
+        
+        // Fetch repositories
+        const reposResponse = await fetch(
+          `https://api.github.com/users/${username}/repos?sort=updated&per_page=30&type=owner`
+        );
+
+        if (!reposResponse.ok) {
+          throw new Error(`GitHub API error: ${reposResponse.status}`);
+        }
+
+        const repos = await reposResponse.json();
+        const publicRepos = repos.filter((repo: any) => !repo.fork);
+
+        // Process first 15 repos with full details
+        const projectsToProcess = publicRepos.slice(0, 15);
+        const processedProjects = await Promise.all(
+          projectsToProcess.map(async (repo: any, index: number) => {
+            let languagesData: Record<string, number> = {};
+            let languages: string[] = [];
+            let readmeExcerpt = "";
+            let readmeUrl = "";
+            let status = "";
+
+            // Fetch languages
+            try {
+              const langResponse = await fetch(repo.languages_url);
+              if (langResponse.ok) {
+                languagesData = await langResponse.json();
+                const entries = Object.entries(languagesData).sort(
+                  (a: any, b: any) => b[1] - a[1]
+                );
+                languages = entries.slice(0, 5).map(([lang]) => lang);
+              }
+            } catch (e) {
+              // Ignore language fetch errors
+            }
+
+            // Fetch README for first 8 repos
+            if (index < 8) {
+              try {
+                const readmeResponse = await fetch(
+                  `https://api.github.com/repos/${username}/${repo.name}/readme`
+                );
+                if (readmeResponse.ok) {
+                  const readmeData = await readmeResponse.json();
+                  try {
+                    const binaryString = atob(readmeData.content);
+                    const readmeContent = new TextDecoder('utf-8').decode(
+                      Uint8Array.from(binaryString, (c) => c.charCodeAt(0))
+                    );
+                    readmeUrl = readmeData.html_url || "";
+                    readmeExcerpt = readmeContent.split("\n").slice(0, 30).join("\n").trim();
+
+                    // Extract status
+                    const firstLines = readmeContent.split("\n").slice(0, 15).join("\n");
+                    const statusMatch = firstLines.match(/status[:\s]+[^\w]*\s*([a-z]+)/i);
+                    if (statusMatch && statusMatch[1]) {
+                      status = statusMatch[1].toLowerCase().trim();
+                    }
+                  } catch (e) {
+                    // Ignore decode errors
+                  }
+                }
+              } catch (e) {
+                // Ignore README fetch errors
+              }
+            }
+
+            return {
+              id: repo.id,
+              name: repo.name,
+              description: repo.description,
+              url: repo.html_url,
+              language: repo.language,
+              languages: languages.length > 0 ? languages : (repo.language ? [repo.language] : []),
+              languagesData,
+              stars: repo.stargazers_count,
+              forks: repo.forks_count,
+              created_at: repo.created_at,
+              updated_at: repo.updated_at,
+              pushed_at: repo.pushed_at,
+              readme_excerpt: readmeExcerpt,
+              readme_url: readmeUrl,
+              status,
+            };
+          })
+        );
+
+        // Add remaining repos with basic info
+        const remainingProjects = publicRepos.slice(15).map((repo: any) => ({
+          id: repo.id,
+          name: repo.name,
+          description: repo.description,
+          url: repo.html_url,
+          language: repo.language,
+          languages: repo.language ? [repo.language] : [],
+          languagesData: {},
+          stars: repo.stargazers_count,
+          forks: repo.forks_count,
+          created_at: repo.created_at,
+          updated_at: repo.updated_at,
+          pushed_at: repo.pushed_at,
+          readme_excerpt: "",
+          readme_url: "",
+          status: "",
+        }));
+
+        const allProjects = [...processedProjects, ...remainingProjects];
+        allProjects.sort(
+          (a, b) => new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime()
+        );
+
+        setProjects(allProjects);
       } catch (err) {
-        console.error("Error fetching repos:", err);
         setError(err instanceof Error ? err.message : "Failed to load projects");
       } finally {
         setLoading(false);
       }
-    };
+    }
 
-    fetchRepos();
+    loadProjects();
   }, []);
 
-  // Group repos by status
-  const completedRepos = repos.filter(
-    (repo) => repo.status && (repo.status.toLowerCase() === "completed" || repo.status.toLowerCase() === "complete")
+  // Group projects by status
+  const completedProjects = projects.filter(
+    (p) => p.status && (p.status === "completed" || p.status === "complete")
   );
-  const ongoingRepos = repos.filter(
-    (repo) => !repo.status || (repo.status.toLowerCase() !== "completed" && repo.status.toLowerCase() !== "complete")
+  const ongoingProjects = projects.filter(
+    (p) => !p.status || (p.status !== "completed" && p.status !== "complete")
   );
 
-  // Sort both groups by most recently pushed
-  const sortByDate = (a: GitHubRepo, b: GitHubRepo) => 
-    new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime();
-  
-  completedRepos.sort(sortByDate);
-  ongoingRepos.sort(sortByDate);
-
-  const formatTechStack = (languages: string[]): string => {
-    if (languages.length === 0) return "Various";
-    return languages.join(" · ");
-  };
-
-  const calculateLanguagePercentages = (languagesData: Record<string, number>): LanguagePercentage[] => {
-    if (!languagesData || Object.keys(languagesData).length === 0) {
-      return [];
-    }
+  // Calculate language percentages
+  function getLanguagePercentages(languagesData: Record<string, number>): LanguageData[] {
+    if (!languagesData || Object.keys(languagesData).length === 0) return [];
 
     const totalBytes = Object.values(languagesData).reduce((sum, bytes) => sum + bytes, 0);
     if (totalBytes === 0) return [];
 
-    const percentages: LanguagePercentage[] = Object.entries(languagesData)
+    return Object.entries(languagesData)
       .map(([name, bytes]) => ({
         name,
         percentage: (bytes / totalBytes) * 100,
-        bytes,
         color: getLanguageColor(name),
       }))
-      .sort((a, b) => b.percentage - a.percentage); // Sort by percentage descending
+      .sort((a, b) => b.percentage - a.percentage);
+  }
 
-    return percentages;
-  };
+  // Format date
+  function formatDate(dateString: string): string {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+  }
 
-  const toggleReadme = (repoId: number) => {
+  // Format project name
+  function formatProjectName(name: string): string {
+    return name.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+  }
+
+  // Toggle README
+  function toggleReadme(projectId: number) {
     setExpandedReadmes((prev) => {
       const newSet = new Set(prev);
-      if (newSet.has(repoId)) {
-        newSet.delete(repoId);
+      if (newSet.has(projectId)) {
+        newSet.delete(projectId);
       } else {
-        newSet.add(repoId);
+        newSet.add(projectId);
       }
       return newSet;
     });
-  };
+  }
 
-  const formatReadmeContent = (content: string): string => {
-    // Remove status lines and clean up the content
-    let formatted = content
+  // Clean README content
+  function cleanReadme(content: string): string {
+    return content
       .replace(/\*\*status[:\s]*\*\*[:\s]*[^\n]*/gi, '')
       .replace(/status[:\s]+[^\n]*/gi, '')
       .replace(/\[status[:\s]*[^\]]*\]/gi, '')
       .replace(/##\s*status[:\s]*[^\n]*/gi, '')
+      .replace(/\n{3,}/g, '\n\n')
       .trim();
-    
-    // Remove excessive blank lines
-    formatted = formatted.replace(/\n{3,}/g, '\n\n');
-    
-    return formatted;
-  };
+  }
 
-  const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric' 
-    });
-  };
-
-  const renderProjectCard = (repo: GitHubRepo, index: number) => {
-    const techStack = formatTechStack(repo.languages.length > 0 ? repo.languages : repo.language ? [repo.language] : []);
-    const displayLanguages = repo.languages.length > 0 ? repo.languages : repo.language ? [repo.language] : [];
-    const isReadmeExpanded = expandedReadmes.has(repo.id);
-    const hasReadme = repo.readme_excerpt && repo.readme_excerpt.trim().length > 0;
-    const languagePercentages = calculateLanguagePercentages(repo.languagesData);
+  // Render project card
+  function renderProjectCard(project: Project, index: number) {
+    const languagePercentages = getLanguagePercentages(project.languagesData);
+    const displayLanguages = project.languages.length > 0
+      ? project.languages
+      : project.language
+      ? [project.language]
+      : [];
+    const isReadmeExpanded = expandedReadmes.has(project.id);
+    const hasReadme = project.readme_excerpt && project.readme_excerpt.trim().length > 0;
+    const techStack = displayLanguages.join(" · ") || "Various";
 
     return (
       <motion.div
-        key={repo.id}
+        key={project.id}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -223,12 +315,12 @@ export default function ProjectsPage() {
           <CardHeader>
             <CardTitle className="text-xl md:text-2xl mb-2 text-left">
               <a
-                href={repo.url}
+                href={project.url}
                 target="_blank"
                 rel="noreferrer"
                 className="text-slate-900 hover:text-sky-900 hover:no-underline"
               >
-                {repo.name.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())}
+                {formatProjectName(project.name)}
               </a>
             </CardTitle>
             <CardDescription className="text-lg md:text-xl text-left text-sky-600 font-medium">
@@ -236,20 +328,17 @@ export default function ProjectsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="text-left">
-            {repo.description && (
+            {project.description && (
               <p className="text-sm text-slate-600 mb-4 leading-relaxed">
-                {repo.description}
+                {project.description}
               </p>
             )}
-            
-            {/* Languages Section with Percentage Bar */}
+
             {languagePercentages.length > 0 ? (
               <div className="mb-4">
                 <p className="text-sm font-semibold text-slate-600 mb-3 uppercase tracking-[0.18em]">
                   Languages
                 </p>
-                
-                {/* Language Bar */}
                 <div className="mb-3">
                   <div className="h-2 rounded-md overflow-hidden bg-slate-200 flex">
                     {languagePercentages.map((lang) => (
@@ -265,13 +354,11 @@ export default function ProjectsPage() {
                     ))}
                   </div>
                 </div>
-
-                {/* Language Legend */}
                 <div className="flex flex-wrap gap-x-4 gap-y-2">
                   {languagePercentages.map((lang) => (
                     <Link
                       key={lang.name}
-                      href={`/tech#${slugify(lang.name)}`}
+                      href={`/tech#${createSlug(lang.name)}`}
                       className="flex items-center gap-1.5 text-xs hover:opacity-80 transition-opacity"
                     >
                       <span
@@ -292,7 +379,7 @@ export default function ProjectsPage() {
                 <div className="flex flex-wrap gap-2">
                   {displayLanguages.length > 0 ? (
                     displayLanguages.map((tech) => (
-                      <Link key={tech} href={`/tech#${slugify(tech)}`}>
+                      <Link key={tech} href={`/tech#${createSlug(tech)}`}>
                         <Badge
                           variant="outline"
                           className="bg-white/80 text-slate-800 border-slate-300 px-3 py-1 hover:bg-sky-50 hover:text-sky-900"
@@ -313,7 +400,6 @@ export default function ProjectsPage() {
               </div>
             )}
 
-            {/* Project Dates */}
             <div className="mt-4 pt-4 border-t border-slate-200">
               <div className="flex flex-col gap-2 text-xs text-slate-600">
                 <div className="flex items-center gap-2">
@@ -333,7 +419,7 @@ export default function ProjectsPage() {
                     <line x1="3" x2="21" y1="10" y2="10" />
                   </svg>
                   <span>
-                    <span className="font-medium">Created:</span> {formatDate(repo.created_at)}
+                    <span className="font-medium">Created:</span> {formatDate(project.created_at)}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -351,17 +437,16 @@ export default function ProjectsPage() {
                     <polyline points="12 6 12 12 16 14" />
                   </svg>
                   <span>
-                    <span className="font-medium">Updated:</span> {formatDate(repo.updated_at)}
+                    <span className="font-medium">Updated:</span> {formatDate(project.updated_at)}
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* README Toggle Button */}
             {hasReadme && (
               <div className="mt-4 pt-4 border-t border-slate-200">
                 <button
-                  onClick={() => toggleReadme(repo.id)}
+                  onClick={() => toggleReadme(project.id)}
                   className="flex items-center gap-2 text-sky-600 hover:text-sky-700 font-semibold text-sm transition-colors w-full text-left"
                 >
                   <span>README</span>
@@ -378,8 +463,6 @@ export default function ProjectsPage() {
                     <path d="m6 9 6 6 6-6" />
                   </svg>
                 </button>
-
-                {/* README Content */}
                 <AnimatePresence>
                   {isReadmeExpanded && (
                     <motion.div
@@ -392,13 +475,13 @@ export default function ProjectsPage() {
                       <div className="mt-4 bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
                         <div className="max-h-64 overflow-y-auto p-4">
                           <pre className="whitespace-pre-wrap text-xs text-slate-700 font-mono leading-relaxed overflow-x-auto">
-                            {formatReadmeContent(repo.readme_excerpt)}
+                            {cleanReadme(project.readme_excerpt)}
                           </pre>
                         </div>
-                        {repo.readme_url && (
+                        {project.readme_url && (
                           <div className="px-4 pb-4 border-t border-slate-200 pt-3">
                             <a
-                              href={repo.readme_url}
+                              href={project.readme_url}
                               target="_blank"
                               rel="noreferrer"
                               className="inline-block text-xs text-sky-600 hover:text-sky-700 font-medium"
@@ -417,7 +500,7 @@ export default function ProjectsPage() {
         </Card>
       </motion.div>
     );
-  };
+  }
 
   return (
     <div className="relative">
@@ -431,7 +514,7 @@ export default function ProjectsPage() {
           transition={{ duration: 0.1 }}
         />
       </div>
-      
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -467,8 +550,7 @@ export default function ProjectsPage() {
 
         {!loading && !error && (
           <div className="w-full max-w-6xl space-y-12">
-            {/* Completed Projects Section */}
-            {completedRepos.length > 0 && (
+            {completedProjects.length > 0 && (
               <div className="space-y-6">
                 <motion.h2
                   initial={{ opacity: 0, y: 20 }}
@@ -479,13 +561,12 @@ export default function ProjectsPage() {
                   Completed Projects
                 </motion.h2>
                 <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
-                  {completedRepos.map((repo, index) => renderProjectCard(repo, index))}
+                  {completedProjects.map((project, index) => renderProjectCard(project, index))}
                 </div>
               </div>
             )}
 
-            {/* Ongoing Projects Section */}
-            {ongoingRepos.length > 0 && (
+            {ongoingProjects.length > 0 && (
               <div className="space-y-6">
                 <motion.h2
                   initial={{ opacity: 0, y: 20 }}
@@ -496,12 +577,14 @@ export default function ProjectsPage() {
                   Ongoing Projects
                 </motion.h2>
                 <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
-                  {ongoingRepos.map((repo, index) => renderProjectCard(repo, index + completedRepos.length))}
+                  {ongoingProjects.map((project, index) =>
+                    renderProjectCard(project, index + completedProjects.length)
+                  )}
                 </div>
               </div>
             )}
 
-            {completedRepos.length === 0 && ongoingRepos.length === 0 && (
+            {completedProjects.length === 0 && ongoingProjects.length === 0 && (
               <div className="w-full text-center py-12">
                 <p className="text-slate-600 text-lg">No projects found.</p>
               </div>
