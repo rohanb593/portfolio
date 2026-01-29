@@ -76,12 +76,16 @@ interface Project {
   status: string;
 }
 
+const INITIAL_SHOWN = 12; // Show first 12 per section, then "Show more" (scales to many repos)
+
 export default function ProjectsPage() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expandedReadmes, setExpandedReadmes] = useState<Set<string | number>>(new Set());
+  const [completedShown, setCompletedShown] = useState(INITIAL_SHOWN);
+  const [ongoingShown, setOngoingShown] = useState(INITIAL_SHOWN);
 
   // Scroll progress tracking
   useEffect(() => {
@@ -130,20 +134,25 @@ export default function ProjectsPage() {
     loadProjects();
   }, []);
 
-  // Group projects by status and sort each group by most recent
+  // Group projects by status and sort each group by latest updated
   const completedProjects = projects
     .filter((p) => {
-      const statusLower = (p.status || "").toLowerCase();
-      return statusLower === "completed" || statusLower === "complete" || statusLower === "done" || statusLower === "finished";
+      const statusLower = (p.status || "").toLowerCase().trim();
+      return ["completed", "complete", "done", "finished"].includes(statusLower);
     })
-    .sort((a, b) => new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime());
-  
+    .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+
   const ongoingProjects = projects
     .filter((p) => {
-      const statusLower = (p.status || "").toLowerCase();
-      return statusLower !== "completed" && statusLower !== "complete" && statusLower !== "done" && statusLower !== "finished";
+      const statusLower = (p.status || "").toLowerCase().trim();
+      return !["completed", "complete", "done", "finished"].includes(statusLower);
     })
-    .sort((a, b) => new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime());
+    .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+
+  const completedVisible = completedProjects.slice(0, completedShown);
+  const ongoingVisible = ongoingProjects.slice(0, ongoingShown);
+  const hasMoreCompleted = completedProjects.length > completedShown;
+  const hasMoreOngoing = ongoingProjects.length > ongoingShown;
 
   // Calculate language percentages
   function getLanguagePercentages(languagesData: Record<string, number>): LanguageData[] {
@@ -188,15 +197,9 @@ export default function ProjectsPage() {
     });
   }
 
-  // Clean README content
+  // Normalise README display only (collapse excess newlines). Keep the status line – it's the first line and is used to filter Completed vs Ongoing.
   function cleanReadme(content: string): string {
-    return content
-      .replace(/\*\*status[:\s]*\*\*[:\s]*[^\n]*/gi, '')
-      .replace(/status[:\s]+[^\n]*/gi, '')
-      .replace(/\[status[:\s]*[^\]]*\]/gi, '')
-      .replace(/##\s*status[:\s]*[^\n]*/gi, '')
-      .replace(/\n{3,}/g, '\n\n')
-      .trim();
+    return content.replace(/\n{3,}/g, "\n\n").trim();
   }
 
   // Render project card
@@ -471,10 +474,23 @@ export default function ProjectsPage() {
                   className="text-2xl md:text-3xl font-semibold text-slate-900 text-left"
                 >
                   Completed Projects
+                  <span className="ml-2 text-lg font-normal text-slate-500">
+                    ({completedProjects.length})
+                  </span>
                 </motion.h2>
                 <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
-                  {completedProjects.map((project, index) => renderProjectCard(project, index))}
+                  {completedVisible.map((project, index) => renderProjectCard(project, index))}
                 </div>
+                {hasMoreCompleted && (
+                  <div className="flex justify-center pt-4">
+                    <button
+                      onClick={() => setCompletedShown((n) => n + INITIAL_SHOWN)}
+                      className="px-6 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-700 font-medium hover:bg-slate-50 transition-colors"
+                    >
+                      Show more ({completedProjects.length - completedShown} more)
+                    </button>
+                  </div>
+                )}
               </div>
             )}
 
@@ -487,12 +503,25 @@ export default function ProjectsPage() {
                   className="text-2xl md:text-3xl font-semibold text-slate-900 text-left"
                 >
                   Ongoing Projects
+                  <span className="ml-2 text-lg font-normal text-slate-500">
+                    ({ongoingProjects.length})
+                  </span>
                 </motion.h2>
                 <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
-                  {ongoingProjects.map((project, index) =>
+                  {ongoingVisible.map((project, index) =>
                     renderProjectCard(project, completedProjects.length + index)
                   )}
                 </div>
+                {hasMoreOngoing && (
+                  <div className="flex justify-center pt-4">
+                    <button
+                      onClick={() => setOngoingShown((n) => n + INITIAL_SHOWN)}
+                      className="px-6 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-700 font-medium hover:bg-slate-50 transition-colors"
+                    >
+                      Show more ({ongoingProjects.length - ongoingShown} more)
+                    </button>
+                  </div>
+                )}
               </div>
             )}
 
