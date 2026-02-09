@@ -70,16 +70,15 @@ export default function RootLayout({
                   target="_blank"
                   rel="noreferrer"
                   aria-label="LinkedIn"
-                  className="text-slate-900 hover:text-sky-900"
+                  className="text-slate-900 hover:text-sky-900 inline-flex"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    className="h-5 w-5 md:h-6 md:w-6"
-                    fill="currentColor"
-                  >
-                    <path d="M4.98 3.5a2.5 2.5 0 11-.02 5.01 2.5 2.5 0 01.02-5.01zM3 9h4v12H3zM9 9h3.8v1.64h.05c.53-1 1.84-2.06 3.78-2.06 4.04 0 4.79 2.66 4.79 6.12V21H18v-5.17c0-1.23-.02-2.81-1.71-2.81-1.71 0-1.97 1.34-1.97 2.72V21h-4V9z" />
-                  </svg>
+                  <img
+                    src="/linkedin.png"
+                    alt="LinkedIn"
+                    className="h-5 w-5 md:h-6 md:w-6 object-contain"
+                    width={24}
+                    height={24}
+                  />
                 </a>
                 <a
                   href="https://github.com/rohanb593"
