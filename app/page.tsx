@@ -1,295 +1,62 @@
-"use client";
+import { siteMeta } from "@/lib/content";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-
-export default function Home() {
-  const [scrollProgress, setScrollProgress] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      
-      const scrollableHeight = documentHeight - windowHeight;
-      const progress = scrollableHeight > 0 ? (scrollTop / scrollableHeight) * 100 : 0;
-      
-      setScrollProgress(Math.min(progress, 100));
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initial call
-    
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+export default function PortfolioHome() {
   return (
-    <div className="relative">
-      {/* Scroll Progress Bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-slate-200">
-        <motion.div
-          className="h-full bg-sky-600"
-          style={{ width: `${scrollProgress}%` }}
-          initial={{ width: 0 }}
-          animate={{ width: `${scrollProgress}%` }}
-          transition={{ duration: 0.1 }}
-        />
-      </div>
-      
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="flex min-h-[70vh] flex-col items-center justify-center gap-10 px-3 text-center sm:px-6 md:gap-12"
-      >
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        className="max-w-3xl space-y-5 md:space-y-6"
-      >
-        <h1 className="font-semibold tracking-tight text-slate-900 text-[clamp(2.8rem,6vw,4.5rem)]">
-          Hi, I&apos;m Rohan
-        </h1>
-        <p className="leading-relaxed text-slate-700 text-[clamp(1.15rem,2.5vw,1.6rem)]">
-          I&apos;m a Computer Science with Management student at Queen Mary University of London.
-          I enjoy building practical software — from full-stack web apps to data tools — and using code to solve real problems.
-          I&apos;m especially interested in combining technical skills with a business mindset to create useful products.
+    <>
+      <section className="page-section reveal">
+        <h1 className="hero-title">{siteMeta.name}</h1>
+        <p className="hero-lead">
+          Computer Science with Management student building practical software with an editorial, systems-first approach.
         </p>
-      </motion.section>
-
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="flex flex-wrap items-center justify-center gap-5 md:gap-6"
-      >
-        <a
-          href="mailto:rohan.bhagat1@outlook.com"
-          className="inline-flex items-center gap-2 text-base font-medium text-slate-900 hover:text-sky-900 md:text-lg"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            className="h-6 w-6 md:h-7 md:w-7"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-            <polyline points="22,6 12,13 2,6" />
-          </svg>
-          <span>Email</span>
-        </a>
-
-        <a
-          href="https://www.linkedin.com/in/rohan-bhagat-a64785341"
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex items-center gap-2 text-base font-medium text-slate-900 hover:text-sky-900 md:text-lg"
-        >
-          <img
-            src="/linkedin.png"
-            alt="LinkedIn"
-            className="h-6 w-6 md:h-7 md:w-7 object-contain"
-            width={28}
-            height={28}
-          />
-          <span>LinkedIn</span>
-        </a>
-
-        <a
-          href="https://github.com/rohanb593"
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex items-center gap-2 text-base font-medium text-slate-900 hover:text-sky-900 md:text-lg"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            className="h-6 w-6 md:h-7 md:w-7"
-            fill="currentColor"
-          >
-            <path d="M12 0C5.37 0 0 5.37 0 12a12 12 0 008.21 11.44c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.1-.75.09-.74.09-.74 1.22.08 1.87 1.25 1.87 1.25 1.08 1.86 2.83 1.32 3.52 1.01.11-.78.42-1.32.76-1.62-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.4 11.4 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.25 2.87.12 3.17.77.84 1.24 1.92 1.24 3.24 0 4.63-2.8 5.66-5.48 5.96.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0024 12c0-6.63-5.37-12-12-12z" />
-          </svg>
-          <span>GitHub</span>
-        </a>
-      </motion.section>
-
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-        className="w-full max-w-7xl mt-10 md:mt-12"
-      >
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <Link href="/experience" className="group">
-            <Card className="h-full transition-all duration-200 hover:shadow-lg hover:scale-[1.02] hover:border-sky-300 cursor-pointer p-6 md:p-7">
-              <CardHeader>
-                <div className="mb-4 flex items-center justify-center gap-3">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sky-100 text-sky-700 group-hover:bg-sky-200 transition-colors md:h-16 md:w-16">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-7 w-7 md:h-8 md:w-8"
-                    >
-                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                      <circle cx="9" cy="7" r="4" />
-                      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                    </svg>
-                  </div>
-                  <CardTitle className="text-xl md:text-2xl mb-0">Experience</CardTitle>
-                </div>
-                <CardDescription className="text-base md:text-lg leading-relaxed">
-                  Internships at Corporate IT Solutions and James Fletcher, building real-world tools and managing infrastructure.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm md:text-base text-sky-700 font-medium group-hover:text-sky-900 transition-colors">
-                  View experience →
-                </p>
-              </CardContent>
-            </Card>
-          </Link>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-          >
-            <Link href="/education" className="group">
-            <Card className="h-full transition-all duration-200 hover:shadow-lg hover:scale-[1.02] hover:border-sky-300 cursor-pointer p-6 md:p-7">
-              <CardHeader>
-                <div className="mb-4 flex items-center justify-center gap-3">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sky-100 text-sky-700 group-hover:bg-sky-200 transition-colors md:h-16 md:w-16">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-7 w-7 md:h-8 md:w-8"
-                    >
-                      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
-                      <path d="M9 10h6" />
-                      <path d="M9 14h6" />
-                    </svg>
-                  </div>
-                  <CardTitle className="text-xl md:text-2xl mb-0">Education</CardTitle>
-                </div>
-                <CardDescription className="text-base md:text-lg leading-relaxed">
-                  BSc Computer Science with Management at QMUL, First Class Year 1, with strong foundations in programming and web tech.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm md:text-base text-sky-700 font-medium group-hover:text-sky-900 transition-colors">
-                  View education →
-                </p>
-              </CardContent>
-            </Card>
-          </Link>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-          >
-            <Link href="/projects" className="group">
-            <Card className="h-full transition-all duration-200 hover:shadow-lg hover:scale-[1.02] hover:border-sky-300 cursor-pointer p-6 md:p-7">
-              <CardHeader>
-                <div className="mb-4 flex items-center justify-center gap-3">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sky-100 text-sky-700 group-hover:bg-sky-200 transition-colors md:h-16 md:w-16">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-7 w-7 md:h-8 md:w-8"
-                    >
-                      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-                      <path d="M12 11v6" />
-                      <path d="M9 14h6" />
-                    </svg>
-                  </div>
-                  <CardTitle className="text-xl md:text-2xl mb-0">Projects</CardTitle>
-                </div>
-                <CardDescription className="text-base md:text-lg leading-relaxed">
-                  Full-stack applications, management systems, and tools built with Python, Java, web technologies, and more.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm md:text-base text-sky-700 font-medium group-hover:text-sky-900 transition-colors">
-                  Explore projects →
-                </p>
-              </CardContent>
-            </Card>
-          </Link>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.7 }}
-          >
-            <Link href="/tech" className="group">
-            <Card className="h-full transition-all duration-200 hover:shadow-lg hover:scale-[1.02] hover:border-sky-300 cursor-pointer p-6 md:p-7">
-              <CardHeader>
-                <div className="mb-4 flex items-center justify-center gap-3">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sky-100 text-sky-700 group-hover:bg-sky-200 transition-colors md:h-16 md:w-16">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-7 w-7 md:h-8 md:w-8"
-                    >
-                      <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                    </svg>
-                  </div>
-                  <CardTitle className="text-xl md:text-2xl mb-0">Tech Stack</CardTitle>
-                </div>
-                <CardDescription className="text-base md:text-lg leading-relaxed">
-                  Java, Python, web technologies, SQL, and frameworks like Streamlit and Swing that I use to build solutions.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm md:text-base text-sky-700 font-medium group-hover:text-sky-900 transition-colors">
-                  See tech stack →
-                </p>
-              </CardContent>
-            </Card>
-          </Link>
-          </motion.div>
+        <div className="contact-links" aria-label="Social links">
+          <a className="contact-link" href={`mailto:${siteMeta.email}`} aria-label="Email">
+            <svg className="contact-icon contact-icon--email" viewBox="0 0 16 16" aria-hidden="true">
+              <defs>
+                <pattern id="chitenge-pattern-email" patternUnits="userSpaceOnUse" width="32" height="32">
+                  <image href="/chitenge.jpg" x="0" y="0" width="32" height="32" preserveAspectRatio="xMidYMid slice" />
+                </pattern>
+              </defs>
+              <rect
+                x="0.75"
+                y="1.5"
+                width="14.5"
+                height="13"
+                rx="2"
+                fill="url(#chitenge-pattern-email)"
+                stroke="var(--bg)"
+                strokeWidth="1.1"
+              />
+              <path d="m1.75 3.5 6.25 4.5 6.25-4.5" fill="none" stroke="var(--bg)" strokeWidth="1.1" strokeLinecap="round" />
+            </svg>
+          </a>
+          <a className="contact-link" href={siteMeta.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+            <svg className="contact-icon" viewBox="0 0 16 16" aria-hidden="true">
+              <defs>
+                <pattern id="chitenge-pattern-linkedin" patternUnits="userSpaceOnUse" width="32" height="32">
+                  <image href="/chitenge.jpg" x="0" y="0" width="32" height="32" preserveAspectRatio="xMidYMid slice" />
+                </pattern>
+              </defs>
+              <path
+                d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"
+                fill="url(#chitenge-pattern-linkedin)"
+              />
+            </svg>
+          </a>
+          <a className="contact-link" href={siteMeta.github} target="_blank" rel="noreferrer" aria-label="GitHub">
+            <svg className="contact-icon" viewBox="0 0 16 16" aria-hidden="true">
+              <defs>
+                <pattern id="chitenge-pattern-github" patternUnits="userSpaceOnUse" width="32" height="32">
+                  <image href="/chitenge.jpg" x="0" y="0" width="32" height="32" preserveAspectRatio="xMidYMid slice" />
+                </pattern>
+              </defs>
+              <path
+                d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.5 7.5 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"
+                fill="url(#chitenge-pattern-github)"
+              />
+            </svg>
+          </a>
         </div>
-      </motion.section>
-    </motion.div>
-    </div>
+      </section>
+    </>
   );
 }
