@@ -6,7 +6,7 @@ export default function PortfolioHome() {
       <section className="page-section reveal">
         <h1 className="hero-title">{siteMeta.name}</h1>
         <p className="hero-lead">
-          BSc Computer Science with Management at Queen Mary University of London — software engineer with{" "}
+          BSc Computer Science with Management at Queen Mary University of London, software engineer with{" "}
           <a href={siteMeta.hyperlinkLondon} target="_blank" rel="noreferrer">
             Hyperlink London
           </a>

@@ -108,7 +108,7 @@ a.label.chitenge-hover:hover {
 }
 
 /*
- * Chitenge hover: two stacked layers (grid). Solid ink fades out, pattern fades in — only `opacity`
+ * Chitenge hover: two stacked layers (grid). Solid ink fades out, pattern fades in; only `opacity`
  * transitions (never `color: transparent`), so no white flash in WebKit.
  */
 .chitenge-hover__pattern {

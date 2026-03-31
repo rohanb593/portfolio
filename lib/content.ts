@@ -63,7 +63,7 @@ export const navLinks = [
   { href: "/tech", label: "Tech" },
 ] as const;
 
-/** In progress first, then completed — order matches the Projects page sections. */
+/** In progress first, then completed; order matches the Projects page sections. */
 export const homeProjects: ProjectEntry[] = [
   {
     id: "01",
@@ -73,7 +73,7 @@ export const homeProjects: ProjectEntry[] = [
     status: "inProgress",
     href: "https://github.com/rohanb593/SafePaws",
     description:
-      "Expo (React Native) app with expo-router, Redux, and Supabase for auth and data—pet owners and minders, bookings, listings, and messaging (group coursework).",
+      "Expo (React Native) app with expo-router, Redux, and Supabase for auth and data for pet owners and minders, bookings, listings, and messaging (group coursework).",
     stack: "Expo, React Native, TypeScript, Redux, Supabase",
   },
   {
@@ -115,7 +115,7 @@ export const homeProjects: ProjectEntry[] = [
     stack: "Next.js, TypeScript, Tailwind CSS",
     imageSrc: "/projects/hyperlink-london-website-hero.jpg",
     imageAlt:
-      "Hyperlink London homepage hero: Building London’s first Hyperloop — student-led initiative at Queen Mary University of London.",
+      "Hyperlink London homepage hero: Building London’s first Hyperloop, a student-led initiative at Queen Mary University of London.",
   },
   {
     id: "05",
@@ -168,7 +168,7 @@ export const experienceItems: ExperienceEntry[] = [
     id: "01",
     org: "Hyperlink Society, Queen Mary University of London",
     location: "London, UK",
-    period: "Oct 2024 – Present",
+    period: "Oct 2024 to Present",
     role: "Software Engineer",
     bullets: [
       "Led software projects for Hyperlink London.",
@@ -181,7 +181,7 @@ export const experienceItems: ExperienceEntry[] = [
     id: "02",
     org: "Corporate IT Solutions",
     location: "Lusaka, Zambia",
-    period: "Jun 2025 – Aug 2025",
+    period: "Jun 2025 to Aug 2025",
     role: "Software Intern",
     bullets: [
       "Built a licence management system with Python and Streamlit, centralising tracking for over 50 multi-vendor software licences.",
@@ -195,7 +195,7 @@ export const experienceItems: ExperienceEntry[] = [
     id: "03",
     org: "James Fletcher",
     location: "London, UK",
-    period: "Jun 2024 – Jul 2024",
+    period: "Jun 2024 to Jul 2024",
     role: "Software Intern",
     bullets: [
       "Built a full-stack Streamlit and Python platform automating repository metric analysis across hundreds of projects.",
@@ -208,7 +208,7 @@ export const educationItems: EducationEntry[] = [
   {
     id: "01",
     institution: "Queen Mary University of London",
-    period: "2024 – 2027",
+    period: "2024 to 2027",
     qualification: "BSc Computer Science with Management",
     headline: "London, UK",
     bullets: [
@@ -219,7 +219,7 @@ export const educationItems: EducationEntry[] = [
   {
     id: "02",
     institution: "American International School of Lusaka",
-    period: "2020 – 2023",
+    period: "2020 to 2023",
     qualification: "International Baccalaureate",
     headline: "Lusaka, Zambia",
     bullets: [

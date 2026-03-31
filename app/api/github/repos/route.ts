@@ -1,5 +1,5 @@
 /**
- * GitHub Repos API – public repos via token, GraphQL-optimised.
+ * GitHub Repos API: public repos via token, GraphQL-optimised.
  * README status: "**Status:** ✅ Completed" → Completed; else → Ongoing.
  * Returns: repo info, language percentages, README (dropdown), created/updated dates.
  */
