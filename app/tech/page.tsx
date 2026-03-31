@@ -1,3 +1,4 @@
+import { ChitengeHoverText } from "@/components/chitenge-hover-text";
 import { IndexAccordion } from "@/components/index-accordion";
 import { techGroups } from "@/lib/content";
 
@@ -8,7 +9,7 @@ export default function TechPage() {
         <h1 className="hero-title">Tools and Languages</h1>
       </section>
       <section className="page-section editorial-grid reveal" style={{ animationDelay: "120ms" }}>
-        <div className="index-content index-list">
+        <div className="index-content">
           {techGroups.map((group) => (
             <IndexAccordion
               key={group.id}
@@ -18,7 +19,7 @@ export default function TechPage() {
                   <span className="index-row__id">{group.id}</span>
                   <div>
                     <h2 className="index-row__title" style={{ fontSize: "var(--step-2)" }}>
-                      {group.name}
+                      <ChitengeHoverText>{group.name}</ChitengeHoverText>
                     </h2>
                   </div>
                   <span className="index-accordion__marker" aria-hidden="true" />

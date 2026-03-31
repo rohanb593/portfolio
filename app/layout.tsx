@@ -31,6 +31,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${ebGaramond.variable} ${jetbrainsMono.variable}`}>
         <div className="site-shell">
+          <div className="site-shell-decor" aria-hidden="true" />
           <Header />
           <main className="site-main">{children}</main>
           <footer className="site-footer">

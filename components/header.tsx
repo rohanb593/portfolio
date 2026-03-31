@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ChitengeHoverText } from "@/components/chitenge-hover-text";
 import { navLinks, siteMeta } from "@/lib/content";
 
 export default function Header() {
@@ -23,12 +24,12 @@ export default function Header() {
         }}
       >
         <Link href="/" className="chitenge-hover" style={{ fontFamily: "var(--font-head)", letterSpacing: "-0.02em" }}>
-          {siteMeta.name}
+          <ChitengeHoverText>{siteMeta.name}</ChitengeHoverText>
         </Link>
         <nav style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
           {navLinks.map((link) => (
             <Link key={link.href} href={link.href} className="label chitenge-hover">
-              {link.label}
+              <ChitengeHoverText>{link.label}</ChitengeHoverText>
             </Link>
           ))}
         </nav>

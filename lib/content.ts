@@ -3,6 +3,7 @@ export type ProjectEntry = {
   title: string;
   category: string;
   year: string;
+  status: "inProgress" | "completed";
   /** Omit when the project has no external links (e.g. this site). */
   href?: string;
   /** Optional label for the primary project link (default: “View project →”). */
@@ -57,43 +58,36 @@ export const navLinks = [
   { href: "/tech", label: "Tech" },
 ] as const;
 
+/** In progress first, then completed — order matches the Projects page sections. */
 export const homeProjects: ProjectEntry[] = [
   {
     id: "01",
+    title: "SafePaws",
+    category: "Mobile",
+    year: "2025",
+    status: "inProgress",
+    href: "https://github.com/rohanb593/SafePaws",
+    description:
+      "Expo (React Native) app with expo-router, Redux, and Supabase for auth and data—pet owners and minders, bookings, listings, and messaging (group coursework).",
+    stack: "Expo, React Native, TypeScript, Redux, Supabase",
+  },
+  {
+    id: "02",
     title: "Hyperlink Inventory Management System",
     category: "Full-stack · Web · Mobile",
     year: "2025",
+    status: "inProgress",
     href: "https://github.com/Hyperlink-London",
     description:
       "Led development of a multi-platform inventory system for Hyperlink London: a full-stack web app and mobile app that improved operational efficiency by about 80% and strengthened inventory tracking.",
     stack: "Next.js, Supabase, Tailwind CSS, Expo, React Native",
   },
   {
-    id: "02",
-    title: "Hyperlink London Website",
-    category: "Web",
-    year: "2025",
-    href: "https://www.hyperlinklondon.com",
-    linkLabel: "Visit hyperlinklondon.com →",
-    description:
-      "Official Hyperlink London site with animated sections, responsive UI, and content for recruitment, departmental overviews, and partnerships.",
-    stack: "Next.js, TypeScript, Tailwind CSS",
-  },
-  {
     id: "03",
-    title: "GitHub Repository Scout",
-    category: "Data tooling",
-    year: "2024",
-    href: "https://github.com/rohanb593/repo-scout",
-    description:
-      "Web tool to analyse repository statistics (stars, forks, lines of code) via the GitHub API.",
-    stack: "Python, Streamlit",
-  },
-  {
-    id: "04",
     title: "This website",
     category: "Editorial web",
     year: "2026",
+    status: "inProgress",
     href: "https://github.com/rohanb593/portfolio",
     linkLabel: "Source on GitHub →",
     description:
@@ -101,34 +95,49 @@ export const homeProjects: ProjectEntry[] = [
     stack: "Next.js, TypeScript, Tailwind CSS",
   },
   {
+    id: "04",
+    title: "Hyperlink London Website",
+    category: "Web",
+    year: "2025",
+    status: "completed",
+    href: "https://www.hyperlinklondon.com",
+    linkLabel: "Visit hyperlinklondon.com →",
+    description:
+      "Official Hyperlink London site with animated sections, responsive UI, and content for recruitment, departmental overviews, and partnerships.",
+    stack: "Next.js, TypeScript, Tailwind CSS",
+  },
+  {
     id: "05",
+    title: "License Management",
+    category: "Full-stack · Internal tools",
+    year: "2025",
+    status: "completed",
+    href: "https://github.com/rohanb593/CITS-Python-Project",
+    description:
+      "Streamlit app with Python and MySQL: customers, products, software licences, renewals, dashboards, and admin requests for internal IT operations.",
+    stack: "Python, Streamlit, MySQL, Pandas, Plotly",
+  },
+  {
+    id: "06",
     title: "Horse Racing Simulator",
     category: "Java · Desktop",
     year: "2024",
+    status: "completed",
     href: "https://github.com/rohanb593/Horse-Racing-Simulator",
     description:
       "Java simulation with a textual console version and a Swing GUI: animated races, weather, betting, horse management, and probability-based mechanics.",
     stack: "Java, Swing",
   },
   {
-    id: "06",
-    title: "SafePaws",
-    category: "Mobile",
-    year: "2025",
-    href: "https://github.com/rohanb593/SafePaws",
-    description:
-      "Expo (React Native) app with expo-router, Redux, and Supabase for auth and data—pet owners and minders, bookings, listings, and messaging (group coursework).",
-    stack: "Expo, React Native, TypeScript, Redux, Supabase",
-  },
-  {
     id: "07",
-    title: "License Management",
-    category: "Full-stack · Internal tools",
-    year: "2025",
-    href: "https://github.com/rohanb593/CITS-Python-Project",
+    title: "GitHub Repository Scout",
+    category: "Data tooling",
+    year: "2024",
+    status: "completed",
+    href: "https://github.com/rohanb593/repo-scout",
     description:
-      "Streamlit app with Python and MySQL: customers, products, software licences, renewals, dashboards, and admin requests for internal IT operations.",
-    stack: "Python, Streamlit, MySQL, Pandas, Plotly",
+      "Web tool to analyse repository statistics (stars, forks, lines of code) via the GitHub API.",
+    stack: "Python, Streamlit",
   },
 ];
 

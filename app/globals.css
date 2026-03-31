@@ -29,6 +29,8 @@
   --dur-fast: 150ms;
   --dur-base: 300ms;
   --dur-slow: 600ms;
+  --dur-link: 320ms;
+  --ease-link: cubic-bezier(0.4, 0, 0.2, 1);
   /* Accordion: smooth deceleration, reads clearly open + close */
   --dur-accordion: 0.58s;
   --ease-accordion: cubic-bezier(0.22, 1, 0.36, 1);
@@ -77,31 +79,87 @@ p {
 a {
   color: inherit;
   text-decoration: none;
-  transition: color var(--dur-fast) var(--ease-out);
+  transition: color var(--dur-link) var(--ease-link);
 }
 
 a:hover {
   color: var(--copper);
 }
 
+/* Chitenge links: keep base color on the anchor (overrides copper hover) so layers crossfade cleanly */
+a.chitenge-hover:hover {
+  color: var(--ink);
+}
+
+a.label.chitenge-hover:hover {
+  color: var(--ink-3);
+}
+
+/*
+ * Chitenge hover: two stacked layers (grid). Solid ink fades out, pattern fades in — only `opacity`
+ * transitions (never `color: transparent`), so no white flash in WebKit.
+ */
+.chitenge-hover__pattern {
+  display: none;
+}
+
 @supports ((-webkit-background-clip: text) or (background-clip: text)) {
-  .chitenge-hover {
-    display: inline-block;
-    transition:
-      background-size var(--dur-base) var(--ease-out),
-      color var(--dur-fast) var(--ease-out);
+  .chitenge-hover__ink {
+    color: currentColor;
+    transition: opacity var(--dur-link) var(--ease-link);
+  }
+
+  .chitenge-hover__pattern {
+    display: block;
     background-image: var(--chitenge-image);
     background-position: left center;
     background-repeat: repeat;
-    background-size: 0% 100%;
-  }
-
-  .chitenge-hover:hover {
-    color: transparent !important;
-    -webkit-text-fill-color: transparent;
     background-size: 220px auto;
     -webkit-background-clip: text;
     background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    opacity: 0;
+    transition: opacity var(--dur-link) var(--ease-link);
+    pointer-events: none;
+  }
+
+  a.chitenge-hover {
+    display: inline-grid;
+    align-items: start;
+    justify-items: start;
+  }
+
+  a.chitenge-hover .chitenge-hover__ink,
+  a.chitenge-hover .chitenge-hover__pattern {
+    grid-area: 1 / 1;
+  }
+
+  a.chitenge-hover:hover .chitenge-hover__ink {
+    opacity: 0;
+  }
+
+  a.chitenge-hover:hover .chitenge-hover__pattern {
+    opacity: 1;
+  }
+
+  .index-row__title {
+    display: inline-grid;
+    align-items: start;
+    justify-items: start;
+  }
+
+  .index-row__title .chitenge-hover__ink,
+  .index-row__title .chitenge-hover__pattern {
+    grid-area: 1 / 1;
+  }
+
+  .index-row:hover .index-row__title .chitenge-hover__ink {
+    opacity: 0;
+  }
+
+  .index-row:hover .index-row__title .chitenge-hover__pattern {
+    opacity: 1;
   }
 }
 
@@ -114,30 +172,38 @@ a:hover {
   isolation: isolate;
 }
 
-.site-shell::before {
+/* Clips the oversized eagle box so it does not extend document scroll; graphic unchanged */
+.site-shell-decor {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scrolls with the page; sits just under the top edge, in line with the header strip */
+.site-shell-decor::before {
   content: "";
-  position: fixed;
-  top: 50%;
+  position: absolute;
+  top: 16px;
   right: -10vw;
-  transform: translateY(-50%);
   width: clamp(1240px, 138vw, 2140px);
   aspect-ratio: 3 / 2;
   background-image: var(--eagle-outline);
   background-repeat: no-repeat;
-  background-position: center right;
+  background-position: top right;
   background-size: contain;
   opacity: 0.28;
   pointer-events: none;
   z-index: 0;
 }
 
-.site-shell > * {
+.site-shell > *:not(.site-shell-decor) {
   position: relative;
   z-index: 1;
 }
 
 .site-main {
-  flex: 1;
   width: min(100%, 1440px);
   margin: 0 auto;
   padding: 0 24px;
@@ -152,7 +218,7 @@ a:hover {
 .footer-inner {
   width: min(100%, 1440px);
   margin: 0 auto;
-  padding: 32px 24px;
+  padding: 16px 24px 20px;
   display: flex;
   justify-content: center;
   gap: 16px;
@@ -172,6 +238,11 @@ a:hover {
 
 .page-section {
   margin-block: var(--section-gap);
+}
+
+/* Tighter gap above the footer than full --section-gap */
+.site-main > .page-section:last-child {
+  margin-bottom: clamp(24px, 5vw, 56px);
 }
 
 .hero-title {
@@ -215,10 +286,6 @@ a:hover {
 
 .index-content {
   grid-column: 1 / -1;
-}
-
-.index-list {
-  border-top: 1px solid var(--rule);
 }
 
 .index-accordion {
@@ -383,6 +450,7 @@ a:hover {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--copper);
+  transition: color var(--dur-link) var(--ease-link);
 }
 
 .index-accordion__project-link:hover {
@@ -405,7 +473,7 @@ a:hover {
   align-items: baseline;
   padding: 18px 0;
   border-bottom: 1px solid var(--rule);
-  transition: background-color var(--dur-fast) var(--ease-out);
+  transition: background-color var(--dur-link) var(--ease-link);
 }
 
 .index-row:hover {
@@ -431,31 +499,10 @@ a:hover {
 }
 
 .index-row__title {
-  display: inline-block;
+  margin: 0;
   font-family: var(--font-head);
   font-size: var(--step-2);
   letter-spacing: -0.03em;
-  transition:
-    background-size var(--dur-base) var(--ease-out),
-    color var(--dur-fast) var(--ease-out);
-  background-image: var(--chitenge-image);
-  background-position: left center;
-  background-repeat: repeat;
-  background-size: 0% 100%;
-}
-
-.index-row:hover .index-row__title {
-  color: var(--copper);
-}
-
-@supports ((-webkit-background-clip: text) or (background-clip: text)) {
-  .index-row:hover .index-row__title {
-    color: transparent !important;
-    -webkit-text-fill-color: transparent;
-    background-size: 220px auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-  }
 }
 
 .index-row__arrow {
@@ -483,7 +530,9 @@ a:hover {
   padding: 0;
   border: 0;
   color: var(--ink);
-  transition: none;
+  transition:
+    opacity var(--dur-link) var(--ease-link),
+    color var(--dur-link) var(--ease-link);
 }
 
 .contact-link:hover {
@@ -502,10 +551,18 @@ a:hover {
   height: 34px;
 }
 
+/* Visible when reduced motion is on (global rule disables animations, so we must not rely on keyframes for opacity) */
 .reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: reveal var(--dur-slow) var(--ease-out) forwards;
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: reveal var(--dur-slow) var(--ease-out) forwards;
+  }
 }
 
 @keyframes reveal {
@@ -602,7 +659,7 @@ a:hover {
     flex-direction: column;
   }
 
-  .site-shell::before {
+  .site-shell-decor::before {
     right: -34vw;
     width: clamp(900px, 255vw, 1700px);
     opacity: 0.2;

@@ -1,3 +1,4 @@
+import { ChitengeHoverText } from "@/components/chitenge-hover-text";
 import { IndexAccordion } from "@/components/index-accordion";
 import { educationItems } from "@/lib/content";
 
@@ -8,7 +9,7 @@ export default function EducationPage() {
         <h1 className="hero-title">Education</h1>
       </section>
       <section className="page-section editorial-grid reveal" style={{ animationDelay: "120ms" }}>
-        <div className="index-content index-list">
+        <div className="index-content">
           {educationItems.map((item) => (
             <IndexAccordion
               key={item.id}
@@ -18,7 +19,7 @@ export default function EducationPage() {
                   <span className="index-row__id">{item.id}</span>
                   <div>
                     <h2 className="index-row__title" style={{ fontSize: "var(--step-2)" }}>
-                      {item.institution}
+                      <ChitengeHoverText>{item.institution}</ChitengeHoverText>
                     </h2>
                     <p style={{ marginTop: "8px", color: "var(--ink-2)" }}>
                       <em>{item.qualification}</em>

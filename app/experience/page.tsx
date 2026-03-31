@@ -1,3 +1,4 @@
+import { ChitengeHoverText } from "@/components/chitenge-hover-text";
 import { IndexAccordion } from "@/components/index-accordion";
 import { experienceItems } from "@/lib/content";
 
@@ -9,7 +10,7 @@ export default function ExperiencePage() {
       </section>
 
       <section className="page-section editorial-grid reveal" style={{ animationDelay: "120ms" }}>
-        <div className="index-content index-list">
+        <div className="index-content">
           {experienceItems.map((item) => (
             <IndexAccordion
               key={item.id}
@@ -19,7 +20,7 @@ export default function ExperiencePage() {
                   <span className="index-row__id">{item.id}</span>
                   <div>
                     <h2 className="index-row__title" style={{ fontSize: "var(--step-2)" }}>
-                      {item.org}
+                      <ChitengeHoverText>{item.org}</ChitengeHoverText>
                     </h2>
                     <p style={{ marginTop: "8px", color: "var(--ink-2)" }}>
                       <em>{item.role}</em>
