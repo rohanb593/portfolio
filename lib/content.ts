@@ -43,7 +43,6 @@ export type TechGroup = {
 export const siteMeta = {
   name: "Rohan Bhagat",
   location: "London, UK",
-  phone: "+44 7776111614",
   email: "rohan.bhagat1@outlook.com",
   website: "https://www.rohanbhagat.co.uk",
   github: "https://github.com/rohanb593",

@@ -13,8 +13,6 @@ export default function PortfolioHome() {
           , building full-stack and mobile products with an editorial, systems-first approach.
         </p>
         <p className="label" style={{ marginTop: "18px", maxWidth: "62ch", lineHeight: 1.7 }}>
-          <a href="tel:+447776111614">{siteMeta.phone}</a>
-          {" · "}
           <a href={siteMeta.website} target="_blank" rel="noreferrer">
             rohanbhagat.co.uk
           </a>
