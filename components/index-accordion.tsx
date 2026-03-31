@@ -1,10 +1,14 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useId, useState, type ReactNode } from "react";
 
 type IndexAccordionProps = {
   /** Responsive grid presets: experience | projects | narrow */
   variant?: "experience" | "projects" | "narrow";
   summaryCells: ReactNode;
   children: ReactNode;
+  /** Extra class names on the expandable panel (e.g. split layout with media). */
+  panelClassName?: string;
 };
 
 const variantClass: Record<NonNullable<IndexAccordionProps["variant"]>, string> = {
@@ -13,15 +17,37 @@ const variantClass: Record<NonNullable<IndexAccordionProps["variant"]>, string> 
   narrow: "index-accordion__summary--narrow",
 };
 
-export function IndexAccordion({ variant = "narrow", summaryCells, children }: IndexAccordionProps) {
+export function IndexAccordion({ variant = "narrow", summaryCells, children, panelClassName }: IndexAccordionProps) {
+  const [open, setOpen] = useState(false);
+  const reactId = useId();
+  const baseId = `acc-${reactId.replace(/:/g, "")}`;
+  const triggerId = `${baseId}-trigger`;
+  const panelOuterId = `${baseId}-panel`;
+
+  const panelClass = panelClassName ? `index-accordion__panel ${panelClassName}` : "index-accordion__panel";
+
   return (
-    <details className="index-accordion">
-      <summary className={`index-row index-accordion__summary ${variantClass[variant]}`}>{summaryCells}</summary>
-      <div className="index-accordion__panel-outer">
+    <div className={open ? "index-accordion index-accordion--open" : "index-accordion"}>
+      <button
+        type="button"
+        id={triggerId}
+        className={`index-row index-accordion__summary ${variantClass[variant]}`}
+        aria-expanded={open}
+        aria-controls={panelOuterId}
+        onClick={() => setOpen((v) => !v)}
+      >
+        {summaryCells}
+      </button>
+      <div
+        className="index-accordion__panel-outer"
+        id={panelOuterId}
+        role="region"
+        aria-labelledby={triggerId}
+      >
         <div className="index-accordion__panel-inner">
-          <div className="index-accordion__panel">{children}</div>
+          <div className={panelClass}>{children}</div>
         </div>
       </div>
-    </details>
+    </div>
   );
 }

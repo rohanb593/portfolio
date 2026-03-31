@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { EB_Garamond, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
@@ -20,6 +20,13 @@ export const metadata: Metadata = {
   title: `${siteMeta.name} | Portfolio`,
   description:
     "Editorial portfolio website for Rohan Bhagat, focused on software engineering work, education, and technical practice.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#f5f1eb",
 };
 
 export default function RootLayout({

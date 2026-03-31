@@ -13,6 +13,12 @@ export type ProjectEntry = {
   secondaryLinkLabel?: string;
   description: string;
   stack: string;
+  /** Optional screenshot in the project accordion (shown on the right when expanded). */
+  imageSrc?: string;
+  imageAlt?: string;
+  /** Intrinsic size for the screenshot (defaults 1024×621 if omitted). */
+  imageWidth?: number;
+  imageHeight?: number;
 };
 
 export type ExperienceEntry = {
@@ -80,6 +86,9 @@ export const homeProjects: ProjectEntry[] = [
     description:
       "Led development of a multi-platform inventory system for Hyperlink London: a full-stack web app and mobile app that improved operational efficiency by about 80% and strengthened inventory tracking.",
     stack: "Next.js, Supabase, Tailwind CSS, Expo, React Native",
+    imageSrc: "/projects/hyperlink-inventory-dashboard.jpg",
+    imageAlt:
+      "Hyperlink inventory dashboard: checkouts view with navigation, search, and item table.",
   },
   {
     id: "03",
@@ -104,6 +113,9 @@ export const homeProjects: ProjectEntry[] = [
     description:
       "Official Hyperlink London site with animated sections, responsive UI, and content for recruitment, departmental overviews, and partnerships.",
     stack: "Next.js, TypeScript, Tailwind CSS",
+    imageSrc: "/projects/hyperlink-london-website-hero.jpg",
+    imageAlt:
+      "Hyperlink London homepage hero: Building London’s first Hyperloop — student-led initiative at Queen Mary University of London.",
   },
   {
     id: "05",
@@ -115,6 +127,9 @@ export const homeProjects: ProjectEntry[] = [
     description:
       "Streamlit app with Python and MySQL: customers, products, software licences, renewals, dashboards, and admin requests for internal IT operations.",
     stack: "Python, Streamlit, MySQL, Pandas, Plotly",
+    imageSrc: "/projects/license-management.jpg",
+    imageAlt:
+      "Corporate IT Solutions license dashboard: metrics, renewal status table, and donut chart for active vs expired licences.",
   },
   {
     id: "06",
@@ -126,6 +141,11 @@ export const homeProjects: ProjectEntry[] = [
     description:
       "Java simulation with a textual console version and a Swing GUI: animated races, weather, betting, horse management, and probability-based mechanics.",
     stack: "Java, Swing",
+    imageSrc: "/projects/horse-racing-simulator.jpg",
+    imageAlt:
+      "Horse Race Swing UI: lanes with shapes, weather controls, horse management sidebar, and race log.",
+    imageWidth: 1024,
+    imageHeight: 713,
   },
   {
     id: "07",
@@ -137,6 +157,9 @@ export const homeProjects: ProjectEntry[] = [
     description:
       "Web tool to analyse repository statistics (stars, forks, lines of code) via the GitHub API.",
     stack: "Python, Streamlit",
+    imageSrc: "/projects/github-repo-scout.jpg",
+    imageAlt:
+      "GitHub Repository Search and Code Analysis Streamlit app: search query, results table with stars, forks, and languages.",
   },
 ];
 
@@ -209,22 +232,16 @@ export const educationItems: EducationEntry[] = [
 export const techGroups: TechGroup[] = [
   {
     id: "01",
-    name: "Languages & human skills",
-    items: ["English (fluent)"],
-    note: "Affiliation: Hyperlink London",
-  },
-  {
-    id: "02",
     name: "Programming languages",
     items: ["Java", "Python", "JavaScript", "TypeScript", "HTML", "CSS", "SQL", "PHP"],
   },
   {
-    id: "03",
+    id: "02",
     name: "Frameworks & UI",
     items: ["Next.js", "React Native", "Expo", "Tailwind CSS", "Streamlit", "Swing", "Tkinter"],
   },
   {
-    id: "04",
+    id: "03",
     name: "Databases & data",
     items: ["MySQL", "Supabase (PostgreSQL)"],
   },

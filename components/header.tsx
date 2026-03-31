@@ -4,31 +4,18 @@ import { navLinks, siteMeta } from "@/lib/content";
 
 export default function Header() {
   return (
-    <header
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 30,
-        background: "var(--bg)",
-      }}
-    >
-      <div
-        style={{
-          width: "min(100%, 1440px)",
-          margin: "0 auto",
-          padding: "18px 24px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: "16px",
-        }}
-      >
-        <Link href="/" className="chitenge-hover" style={{ fontFamily: "var(--font-head)", letterSpacing: "-0.02em" }}>
+    <header className="site-header">
+      <div className="site-header__inner">
+        <Link
+          href="/"
+          className="chitenge-hover site-header__brand"
+          style={{ fontFamily: "var(--font-head)", letterSpacing: "-0.02em" }}
+        >
           <ChitengeHoverText>{siteMeta.name}</ChitengeHoverText>
         </Link>
-        <nav style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+        <nav className="site-header__nav" aria-label="Primary">
           {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} className="label chitenge-hover">
+            <Link key={link.href} href={link.href} className="label chitenge-hover site-header__link">
               <ChitengeHoverText>{link.label}</ChitengeHoverText>
             </Link>
           ))}

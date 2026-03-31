@@ -10,6 +10,7 @@ function ProjectAccordions({ projects }: { projects: ProjectEntry[] }) {
         <IndexAccordion
           key={project.id}
           variant="projects"
+          panelClassName={project.imageSrc ? "index-accordion__panel--split" : undefined}
           summaryCells={
             <>
               <span className="index-row__id">{project.id}</span>
@@ -24,27 +25,68 @@ function ProjectAccordions({ projects }: { projects: ProjectEntry[] }) {
             </>
           }
         >
-          <p className="index-accordion__lead">{project.description}</p>
-          <p className="index-accordion__stack">{project.stack}</p>
-          {project.href ? (
-            <div className="index-accordion__project-links">
-              <ProjectExternalLink
-                href={project.href}
-                label={project.linkLabel ?? "View project →"}
-                patternId={`gh-${project.id}-primary`}
-                projectTitle={project.title}
-              />
-              {project.secondaryHref ? (
-                <ProjectExternalLink
-                  href={project.secondaryHref}
-                  label={project.secondaryLinkLabel ?? "Source →"}
-                  patternId={`gh-${project.id}-secondary`}
-                  projectTitle={project.title}
-                  variant="secondary"
+          {project.imageSrc ? (
+            <>
+              <div className="index-accordion__panel-main">
+                <p className="index-accordion__lead">{project.description}</p>
+                <p className="index-accordion__stack">{project.stack}</p>
+                {project.href ? (
+                  <div className="index-accordion__project-links">
+                    <ProjectExternalLink
+                      href={project.href}
+                      label={project.linkLabel ?? "View project →"}
+                      patternId={`gh-${project.id}-primary`}
+                      projectTitle={project.title}
+                    />
+                    {project.secondaryHref ? (
+                      <ProjectExternalLink
+                        href={project.secondaryHref}
+                        label={project.secondaryLinkLabel ?? "Source →"}
+                        patternId={`gh-${project.id}-secondary`}
+                        projectTitle={project.title}
+                        variant="secondary"
+                      />
+                    ) : null}
+                  </div>
+                ) : null}
+              </div>
+              <div className="index-accordion__panel-media">
+                <img
+                  className="index-accordion__panel-image"
+                  src={project.imageSrc}
+                  alt={project.imageAlt ?? ""}
+                  width={project.imageWidth ?? 1024}
+                  height={project.imageHeight ?? 621}
+                  loading="lazy"
+                  decoding="async"
                 />
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="index-accordion__lead">{project.description}</p>
+              <p className="index-accordion__stack">{project.stack}</p>
+              {project.href ? (
+                <div className="index-accordion__project-links">
+                  <ProjectExternalLink
+                    href={project.href}
+                    label={project.linkLabel ?? "View project →"}
+                    patternId={`gh-${project.id}-primary`}
+                    projectTitle={project.title}
+                  />
+                  {project.secondaryHref ? (
+                    <ProjectExternalLink
+                      href={project.secondaryHref}
+                      label={project.secondaryLinkLabel ?? "Source →"}
+                      patternId={`gh-${project.id}-secondary`}
+                      projectTitle={project.title}
+                      variant="secondary"
+                    />
+                  ) : null}
+                </div>
               ) : null}
-            </div>
-          ) : null}
+            </>
+          )}
         </IndexAccordion>
       ))}
     </>
