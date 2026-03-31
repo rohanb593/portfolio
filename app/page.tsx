@@ -6,7 +6,20 @@ export default function PortfolioHome() {
       <section className="page-section reveal">
         <h1 className="hero-title">{siteMeta.name}</h1>
         <p className="hero-lead">
-          Computer Science with Management student building practical software with an editorial, systems-first approach.
+          BSc Computer Science with Management at Queen Mary University of London — software engineer with{" "}
+          <a href={siteMeta.hyperlinkLondon} target="_blank" rel="noreferrer">
+            Hyperlink London
+          </a>
+          , building full-stack and mobile products with an editorial, systems-first approach.
+        </p>
+        <p className="label" style={{ marginTop: "18px", maxWidth: "62ch", lineHeight: 1.7 }}>
+          <a href="tel:+447776111614">{siteMeta.phone}</a>
+          {" · "}
+          <a href={siteMeta.website} target="_blank" rel="noreferrer">
+            rohanbhagat.co.uk
+          </a>
+          {" · "}
+          {siteMeta.location}
         </p>
         <div className="contact-links" aria-label="Social links">
           <a className="contact-link" href={`mailto:${siteMeta.email}`} aria-label="Email">
