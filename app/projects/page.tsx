@@ -50,7 +50,13 @@ function ProjectAccordions({ projects }: { projects: ProjectEntry[] }) {
                   </div>
                 ) : null}
               </div>
-              <div className="index-accordion__panel-media">
+              <div
+                className={
+                  project.secondaryImageSrc
+                    ? "index-accordion__panel-media index-accordion__panel-media--gallery"
+                    : "index-accordion__panel-media"
+                }
+              >
                 <img
                   className="index-accordion__panel-image"
                   src={project.imageSrc}
@@ -60,6 +66,17 @@ function ProjectAccordions({ projects }: { projects: ProjectEntry[] }) {
                   loading="lazy"
                   decoding="async"
                 />
+                {project.secondaryImageSrc ? (
+                  <img
+                    className="index-accordion__panel-image"
+                    src={project.secondaryImageSrc}
+                    alt={project.secondaryImageAlt ?? ""}
+                    width={project.secondaryImageWidth ?? 1024}
+                    height={project.secondaryImageHeight ?? 621}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
               </div>
             </>
           ) : (
@@ -104,11 +121,21 @@ export default function ProjectsPage() {
       </section>
       <section className="page-section editorial-grid reveal" style={{ animationDelay: "120ms" }}>
         <div className="index-content">
-          <h2 className="label" style={{ marginBottom: "1.25rem" }}>
-            In progress
-          </h2>
-          <ProjectAccordions projects={inProgress} />
-          <h2 className="label" style={{ marginTop: "clamp(2rem, 5vw, 3rem)", marginBottom: "1.25rem" }}>
+          {inProgress.length > 0 ? (
+            <>
+              <h2 className="label" style={{ marginBottom: "1.25rem" }}>
+                In progress
+              </h2>
+              <ProjectAccordions projects={inProgress} />
+            </>
+          ) : null}
+          <h2
+            className="label"
+            style={{
+              marginTop: inProgress.length > 0 ? "clamp(2rem, 5vw, 3rem)" : 0,
+              marginBottom: "1.25rem",
+            }}
+          >
             Completed
           </h2>
           <ProjectAccordions projects={completed} />

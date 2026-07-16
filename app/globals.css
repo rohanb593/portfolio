@@ -451,7 +451,7 @@ a.label.chitenge-hover:hover {
   /* Text stays left in a readable column; image column grows and aligns flush right */
   grid-template-columns: minmax(0, min(58ch, 100%)) 1fr;
   gap: clamp(20px, 4vw, 40px);
-  align-items: start;
+  align-items: center;
   width: 100%;
   max-width: none;
 }
@@ -462,6 +462,8 @@ a.label.chitenge-hover:hover {
 
 .index-accordion__panel-media {
   justify-self: end;
+  display: flex;
+  gap: 2px;
   width: 100%;
   max-width: min(520px, 100%);
   min-width: 0;
@@ -475,7 +477,24 @@ a.label.chitenge-hover:hover {
   display: block;
   width: 100%;
   height: auto;
+  min-width: 0;
+  flex: 1 1 0;
   vertical-align: middle;
+}
+
+.index-accordion__panel-media--gallery {
+  max-width: min(340px, 100%);
+  gap: 24px;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.index-accordion__panel-media--gallery .index-accordion__panel-image {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
 }
 
 @media (max-width: 720px) {
@@ -589,7 +608,7 @@ a.label.chitenge-hover:hover {
   display: grid;
   grid-template-columns: 80px 1fr 180px 80px 28px;
   gap: 12px;
-  align-items: baseline;
+  align-items: center;
   padding: 18px 0;
   border-bottom: 1px solid var(--rule);
   transition: background-color var(--dur-link) var(--ease-link);

@@ -19,6 +19,11 @@ export type ProjectEntry = {
   /** Intrinsic size for the screenshot (defaults 1024×621 if omitted). */
   imageWidth?: number;
   imageHeight?: number;
+  /** Optional second screenshot, shown alongside the first (e.g. two app screens). */
+  secondaryImageSrc?: string;
+  secondaryImageAlt?: string;
+  secondaryImageWidth?: number;
+  secondaryImageHeight?: number;
 };
 
 export type ExperienceEntry = {
@@ -70,18 +75,27 @@ export const homeProjects: ProjectEntry[] = [
     title: "SafePaws",
     category: "Mobile",
     year: "2025",
-    status: "inProgress",
+    status: "completed",
     href: "https://github.com/rohanb593/SafePaws",
     description:
       "Expo (React Native) app with expo-router, Redux, and Supabase for auth and data for pet owners and minders, bookings, listings, and messaging (group coursework).",
     stack: "Expo, React Native, TypeScript, Redux, Supabase",
+    imageSrc: "/projects/safepaws-dashboard.jpg",
+    imageAlt: "SafePaws dashboard: booking requests, jobs as a minder, upcoming bookings, and my pets.",
+    imageWidth: 1206,
+    imageHeight: 2622,
+    secondaryImageSrc: "/projects/safepaws-search.jpg",
+    secondaryImageAlt:
+      "SafePaws find a pet minder screen: filters for pet type, day, time window, postcode, and price, with minder results.",
+    secondaryImageWidth: 1206,
+    secondaryImageHeight: 2622,
   },
   {
     id: "02",
     title: "Hyperlink Inventory Management System",
     category: "Full-stack · Web · Mobile",
     year: "2025",
-    status: "inProgress",
+    status: "completed",
     href: "https://github.com/Hyperlink-London",
     description:
       "Led development of a multi-platform inventory system for Hyperlink London: a full-stack web app and mobile app that improved operational efficiency by about 80% and strengthened inventory tracking.",
@@ -92,10 +106,10 @@ export const homeProjects: ProjectEntry[] = [
   },
   {
     id: "03",
-    title: "This website",
+    title: "This Website",
     category: "Editorial web",
     year: "2026",
-    status: "inProgress",
+    status: "completed",
     href: "https://github.com/rohanb593/portfolio",
     linkLabel: "Source on GitHub →",
     description:
