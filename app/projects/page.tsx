@@ -35,14 +35,14 @@ function ProjectAccordions({ projects }: { projects: ProjectEntry[] }) {
                     <ProjectExternalLink
                       href={project.href}
                       label={project.linkLabel ?? "View project →"}
-                      patternId={`gh-${project.id}-primary`}
+                      patternId={`gh-${project.status}-${project.id}-primary`}
                       projectTitle={project.title}
                     />
                     {project.secondaryHref ? (
                       <ProjectExternalLink
                         href={project.secondaryHref}
                         label={project.secondaryLinkLabel ?? "Source →"}
-                        patternId={`gh-${project.id}-secondary`}
+                        patternId={`gh-${project.status}-${project.id}-secondary`}
                         projectTitle={project.title}
                         variant="secondary"
                       />
@@ -88,14 +88,14 @@ function ProjectAccordions({ projects }: { projects: ProjectEntry[] }) {
                   <ProjectExternalLink
                     href={project.href}
                     label={project.linkLabel ?? "View project →"}
-                    patternId={`gh-${project.id}-primary`}
+                    patternId={`gh-${project.status}-${project.id}-primary`}
                     projectTitle={project.title}
                   />
                   {project.secondaryHref ? (
                     <ProjectExternalLink
                       href={project.secondaryHref}
                       label={project.secondaryLinkLabel ?? "Source →"}
-                      patternId={`gh-${project.id}-secondary`}
+                      patternId={`gh-${project.status}-${project.id}-secondary`}
                       projectTitle={project.title}
                       variant="secondary"
                     />

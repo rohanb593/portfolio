@@ -72,6 +72,31 @@ export const navLinks = [
 export const homeProjects: ProjectEntry[] = [
   {
     id: "01",
+    title: "Submission Approval Workflow",
+    category: "Full-stack · Web · Mobile",
+    year: "2026",
+    status: "inProgress",
+    href: "https://github.com/rohanb593/Submission-Approval-Workflow",
+    linkLabel: "Web →",
+    secondaryHref: "https://github.com/rohanb593/submission_approval_app",
+    secondaryLinkLabel: "Mobile →",
+    description:
+      "Submission and approval workflow system: a Go (chi, GORM, PostgreSQL, Redis, JWT) backend and Next.js frontend, paired with a Flutter mobile app for requesters, reviewers, and admins.",
+    stack: "Go, PostgreSQL, Redis, Next.js, TypeScript, Flutter, Dart",
+  },
+  {
+    id: "01",
+    title: "Hill & Delamain",
+    category: "Web",
+    year: "2026",
+    status: "completed",
+    href: "https://github.com/rohanb593/Hill-Delamain",
+    description:
+      "Marketing site for a global freight forwarding company (20+ years, 30 offices, 11 countries): capability, network, and heritage pages with interactive maps to convert prospects into enquiries.",
+    stack: "Next.js, TypeScript, Tailwind CSS, Leaflet",
+  },
+  {
+    id: "02",
     title: "SafePaws",
     category: "Mobile",
     year: "2025",
@@ -91,7 +116,7 @@ export const homeProjects: ProjectEntry[] = [
     secondaryImageHeight: 2622,
   },
   {
-    id: "02",
+    id: "03",
     title: "Hyperlink Inventory Management System",
     category: "Full-stack · Web · Mobile",
     year: "2025",
@@ -105,7 +130,7 @@ export const homeProjects: ProjectEntry[] = [
       "Hyperlink inventory dashboard: checkouts view with navigation, search, and item table.",
   },
   {
-    id: "03",
+    id: "04",
     title: "This Website",
     category: "Editorial web",
     year: "2026",
@@ -117,7 +142,7 @@ export const homeProjects: ProjectEntry[] = [
     stack: "Next.js, TypeScript, Tailwind CSS",
   },
   {
-    id: "04",
+    id: "05",
     title: "Hyperlink London Website",
     category: "Web",
     year: "2025",
@@ -132,7 +157,7 @@ export const homeProjects: ProjectEntry[] = [
       "Hyperlink London homepage hero: Building London’s first Hyperloop, a student-led initiative at Queen Mary University of London.",
   },
   {
-    id: "05",
+    id: "06",
     title: "License Management",
     category: "Full-stack · Internal tools",
     year: "2025",
@@ -146,7 +171,7 @@ export const homeProjects: ProjectEntry[] = [
       "Corporate IT Solutions license dashboard: metrics, renewal status table, and donut chart for active vs expired licences.",
   },
   {
-    id: "06",
+    id: "07",
     title: "Horse Racing Simulator",
     category: "Java · Desktop",
     year: "2024",
@@ -162,7 +187,7 @@ export const homeProjects: ProjectEntry[] = [
     imageHeight: 713,
   },
   {
-    id: "07",
+    id: "08",
     title: "GitHub Repository Scout",
     category: "Data tooling",
     year: "2024",
@@ -247,16 +272,27 @@ export const techGroups: TechGroup[] = [
   {
     id: "01",
     name: "Programming languages",
-    items: ["Java", "Python", "JavaScript", "TypeScript", "HTML", "CSS", "SQL", "PHP"],
+    items: ["Java", "Python", "JavaScript", "TypeScript", "Go", "Dart", "HTML", "CSS", "SQL", "PHP"],
   },
   {
     id: "02",
     name: "Frameworks & UI",
-    items: ["Next.js", "React Native", "Expo", "Tailwind CSS", "Streamlit", "Swing", "Tkinter"],
+    items: [
+      "Next.js",
+      "React Native",
+      "Expo",
+      "Flutter",
+      "Redux",
+      "Tailwind CSS",
+      "Leaflet",
+      "Streamlit",
+      "Swing",
+      "Tkinter",
+    ],
   },
   {
     id: "03",
     name: "Databases & data",
-    items: ["MySQL", "Supabase (PostgreSQL)"],
+    items: ["MySQL", "Supabase (PostgreSQL)", "PostgreSQL", "Redis", "Pandas", "Plotly"],
   },
 ];

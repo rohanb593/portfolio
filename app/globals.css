@@ -563,9 +563,9 @@ a.label.chitenge-hover:hover {
 
 .index-accordion__project-links {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
   margin-top: 14px;
 }
 
