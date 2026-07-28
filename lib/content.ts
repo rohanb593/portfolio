@@ -94,6 +94,11 @@ export const homeProjects: ProjectEntry[] = [
     description:
       "Marketing site for a global freight forwarding company (20+ years, 30 offices, 11 countries): capability, network, and heritage pages with interactive maps to convert prospects into enquiries.",
     stack: "Next.js, TypeScript, Tailwind CSS, Leaflet",
+    imageSrc: "/projects/hill-delamain-hero.png",
+    imageAlt:
+      "Hill & Delamain homepage hero: split blue and red layout with Your Cargo, Our Commitment headline and freight forwarding illustration.",
+    imageWidth: 1024,
+    imageHeight: 677,
   },
   {
     id: "02",
