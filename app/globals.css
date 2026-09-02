@@ -80,6 +80,10 @@ h6 {
   font-family: var(--font-head);
   font-weight: 500;
   letter-spacing: -0.03em;
+  /* Disable the font's built-in kern pairs: at display sizes with the -0.03em
+     track, aggressive pairs (notably R + round letters, e.g. "Ro") collapse
+     into their neighbour. Uniform tracking reads more evenly here. */
+  font-kerning: none;
   line-height: 1.05;
 }
 
