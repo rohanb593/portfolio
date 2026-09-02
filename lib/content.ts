@@ -68,14 +68,14 @@ export const navLinks = [
   { href: "/tech", label: "Tech" },
 ] as const;
 
-/** In progress first, then completed; order matches the Projects page sections. */
+/** In progress first (if any), then completed; order matches the Projects page sections. */
 export const homeProjects: ProjectEntry[] = [
   {
     id: "01",
     title: "Submission Approval Workflow",
     category: "Full-stack · Web · Mobile",
     year: "2026",
-    status: "inProgress",
+    status: "completed",
     href: "https://github.com/rohanb593/Submission-Approval-Workflow",
     linkLabel: "Web →",
     secondaryHref: "https://github.com/rohanb593/submission_approval_app",
@@ -85,7 +85,17 @@ export const homeProjects: ProjectEntry[] = [
     stack: "Go, PostgreSQL, Redis, Next.js, TypeScript, Flutter, Dart",
   },
   {
-    id: "01",
+    id: "02",
+    title: "Nkumbu Credit Solutions",
+    category: "Full-stack · Web",
+    year: "2026",
+    status: "completed",
+    description:
+      "Micro-lending platform built at Probase Solutions: a Go (Echo, GORM, PostgreSQL) backend covering the full loan lifecycle — application, automated credit scoring, admin approval, PDF agreement generation, and repayment tracking — with a React 19 role and permission-based admin console, an AI-powered customer chatbot, a WhatsApp Cloud API conversational bot, and a RabbitMQ event-processing layer for emails, notifications, and PDF generation.",
+    stack: "Go, Echo, GORM, PostgreSQL, RabbitMQ, React 19, TypeScript, WhatsApp Cloud API",
+  },
+  {
+    id: "03",
     title: "Hill & Delamain",
     category: "Web",
     year: "2026",
@@ -101,7 +111,7 @@ export const homeProjects: ProjectEntry[] = [
     imageHeight: 677,
   },
   {
-    id: "02",
+    id: "04",
     title: "SafePaws",
     category: "Mobile",
     year: "2025",
@@ -121,7 +131,7 @@ export const homeProjects: ProjectEntry[] = [
     secondaryImageHeight: 2622,
   },
   {
-    id: "03",
+    id: "05",
     title: "Hyperlink Inventory Management System",
     category: "Full-stack · Web · Mobile",
     year: "2025",
@@ -135,7 +145,7 @@ export const homeProjects: ProjectEntry[] = [
       "Hyperlink inventory dashboard: checkouts view with navigation, search, and item table.",
   },
   {
-    id: "04",
+    id: "06",
     title: "This Website",
     category: "Editorial web",
     year: "2026",
@@ -147,7 +157,7 @@ export const homeProjects: ProjectEntry[] = [
     stack: "Next.js, TypeScript, Tailwind CSS",
   },
   {
-    id: "05",
+    id: "07",
     title: "Hyperlink London Website",
     category: "Web",
     year: "2025",
@@ -162,7 +172,7 @@ export const homeProjects: ProjectEntry[] = [
       "Hyperlink London homepage hero: Building London’s first Hyperloop, a student-led initiative at Queen Mary University of London.",
   },
   {
-    id: "06",
+    id: "08",
     title: "License Management",
     category: "Full-stack · Internal tools",
     year: "2025",
@@ -176,7 +186,7 @@ export const homeProjects: ProjectEntry[] = [
       "Corporate IT Solutions license dashboard: metrics, renewal status table, and donut chart for active vs expired licences.",
   },
   {
-    id: "07",
+    id: "09",
     title: "Horse Racing Simulator",
     category: "Java · Desktop",
     year: "2024",
@@ -192,7 +202,7 @@ export const homeProjects: ProjectEntry[] = [
     imageHeight: 713,
   },
   {
-    id: "08",
+    id: "10",
     title: "GitHub Repository Scout",
     category: "Data tooling",
     year: "2024",
@@ -210,6 +220,20 @@ export const homeProjects: ProjectEntry[] = [
 export const experienceItems: ExperienceEntry[] = [
   {
     id: "01",
+    org: "Probase Solutions",
+    location: "Lusaka, Zambia",
+    period: "Jul 2026 to Aug 2026",
+    role: "Software Engineer Intern",
+    bullets: [
+      "Built the Go (Echo, GORM, PostgreSQL) backend for Nkumbu Credit Solutions, a micro-lending platform, covering the full loan lifecycle: application, automated credit scoring, admin approval, PDF agreement generation, and repayment tracking.",
+      "Built the React 19 frontend: a role and permission-based admin console and a customer-facing AI-powered chatbot.",
+      "Built a WhatsApp Cloud API conversational bot letting clients register, apply for loans, and make repayments through a session-based chat flow.",
+      "Implemented role-based access control (JWT auth, granular admin permissions), audit logging, and secure password recovery.",
+      "Architected an asynchronous event-processing layer with RabbitMQ to decouple emails, notifications, and PDF generation from the request path, adding automatic retries and dead-letter queues for fault tolerance.",
+    ],
+  },
+  {
+    id: "02",
     org: "Hyperlink Society, Queen Mary University of London",
     location: "London, UK",
     period: "Oct 2024 to Present",
@@ -222,11 +246,11 @@ export const experienceItems: ExperienceEntry[] = [
     ],
   },
   {
-    id: "02",
+    id: "03",
     org: "Corporate IT Solutions",
     location: "Lusaka, Zambia",
     period: "Jun 2025 to Aug 2025",
-    role: "Software Intern",
+    role: "Software Engineer Intern",
     bullets: [
       "Built a licence management system with Python and Streamlit, centralising tracking for over 50 multi-vendor software licences.",
       "Developed a full-stack inventory management system for a hardware store, reducing item lookup times by 25%.",
@@ -236,7 +260,7 @@ export const experienceItems: ExperienceEntry[] = [
     ],
   },
   {
-    id: "03",
+    id: "04",
     org: "James Fletcher",
     location: "London, UK",
     period: "Jun 2024 to Jul 2024",
