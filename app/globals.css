@@ -68,6 +68,8 @@ body {
   font-family: var(--font-body);
   font-size: var(--step-0);
   line-height: 1.8;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 h1,
@@ -312,6 +314,8 @@ a.label.chitenge-hover:hover {
   font-size: var(--step-5);
   color: var(--copper);
   line-height: 1.175;
+  overflow-wrap: break-word;
+  text-wrap: balance;
 }
 
 @supports ((-webkit-background-clip: text) or (background-clip: text)) {
@@ -820,6 +824,82 @@ a.label.chitenge-hover:hover {
 
   .footer-inner {
     flex-direction: column;
+  }
+
+  :root {
+    --section-gap: clamp(48px, 14vw, 80px);
+  }
+
+  .site-header__inner {
+    padding-bottom: 8px;
+    gap: 0 16px;
+  }
+
+  .site-header__nav {
+    gap: 0 14px;
+  }
+
+  .site-header__link {
+    padding-inline: 0;
+  }
+
+  .hero-lead {
+    font-size: 1.15rem;
+    margin-top: 12px;
+  }
+
+  /* Smaller row titles; page markup reads --step-2 inline */
+  .index-row {
+    --step-2: 1.35rem;
+    gap: 10px;
+    padding: 16px 0;
+  }
+
+  .index-row__title {
+    overflow-wrap: break-word;
+  }
+
+  /* Experience: period sits under the title instead of wrapping into a stray row */
+  .index-accordion__summary--experience .index-row__id {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: start;
+    padding-top: 0.4em;
+  }
+
+  .index-accordion__summary--experience > div {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .index-accordion__summary--experience .index-row__meta--primary {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .index-accordion__summary--experience .index-accordion__marker {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+
+  /* Use the full width for expanded content */
+  .index-accordion__panel {
+    padding-left: 0;
+    padding-bottom: 20px;
+  }
+
+  .index-accordion__panel-media--gallery {
+    gap: 12px;
+  }
+
+  .index-accordion__project-links {
+    gap: 20px;
+  }
+
+  .index-accordion__project-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
 
   .site-shell-decor::before {
